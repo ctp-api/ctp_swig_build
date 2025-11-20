@@ -9,15 +9,4 @@ wheels/
 # Virtual environments
 .venv/
 .idea/
-# Cursor
-.cursor/
-data/
-log/
-.trae/
-config/brokers.yaml
-.vercel/
-CLAUDE.md
-.claude/
-.lingma/
-/.lingma/
-logs/
+.git/
