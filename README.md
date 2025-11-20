@@ -25,8 +25,6 @@
 
 - 下载本项目
 
-  ![download_project](assets/download_project.png)
-
   使用 `git clone` 或者  `Download ZIP` (在gitcode上是点击**下载zip**)将本项目下载到本地，然后将上述所有 API 文件复制并替换掉 **ctp** 内文件。
 
   ![ctp_files](assets/ctp_files.jpg)
