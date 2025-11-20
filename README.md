@@ -25,9 +25,11 @@
 
 - 下载本项目
 
-  ![image-20251120151603432](C:\Users\donny\AppData\Roaming\Typora\typora-user-images\image-20251120151603432.png)
+  ![download_project](assets/download_project.png)
 
-  使用 `git clone` 或者  `Download ZIP` 将本项目下载到本地，将上述所有 API 文件复制并替换掉 **ctp** 内文件。
+  使用 `git clone` 或者  `Download ZIP` (在gitcode上是点击**下载zip**)将本项目下载到本地，然后将上述所有 API 文件复制并替换掉 **ctp** 内文件。
+
+  ![ctp_files](assets/ctp_files.jpg)
 
   完成之后项目结构如下：
 
