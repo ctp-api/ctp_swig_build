@@ -14,7 +14,7 @@ else:
 try:
     import builtins as __builtin__
 except ImportError:
-    import builtins
+    import __builtin__
 
 def _swig_repr(self):
     try:
@@ -432,6 +432,8 @@ THOST_FTDC_TPID_LoginFailMaxNumForIP = _thosttraderapi.THOST_FTDC_TPID_LoginFail
 THOST_FTDC_TPID_PasswordPeriod = _thosttraderapi.THOST_FTDC_TPID_PasswordPeriod
 THOST_FTDC_TPID_PwdHistoryCmp = _thosttraderapi.THOST_FTDC_TPID_PwdHistoryCmp
 THOST_FTDC_TPID_TranferChkProperty = _thosttraderapi.THOST_FTDC_TPID_TranferChkProperty
+THOST_FTDC_TPID_TradeChkPhase = _thosttraderapi.THOST_FTDC_TPID_TradeChkPhase
+THOST_FTDC_TPID_TradeChkPriceVol = _thosttraderapi.THOST_FTDC_TPID_TradeChkPriceVol
 THOST_FTDC_FI_SettlementFund = _thosttraderapi.THOST_FTDC_FI_SettlementFund
 THOST_FTDC_FI_Trade = _thosttraderapi.THOST_FTDC_FI_Trade
 THOST_FTDC_FI_InvestorPosition = _thosttraderapi.THOST_FTDC_FI_InvestorPosition
@@ -1378,6 +1380,10 @@ THOST_FTDC_ADV_V4 = _thosttraderapi.THOST_FTDC_ADV_V4
 THOST_FTDC_ADV_V6 = _thosttraderapi.THOST_FTDC_ADV_V6
 THOST_FTDC_TGQS_QryIdle = _thosttraderapi.THOST_FTDC_TGQS_QryIdle
 THOST_FTDC_TGQS_QryBusy = _thosttraderapi.THOST_FTDC_TGQS_QryBusy
+THOST_FTDC_OT_OPT_OFFSET = _thosttraderapi.THOST_FTDC_OT_OPT_OFFSET
+THOST_FTDC_OT_FUT_OFFSET = _thosttraderapi.THOST_FTDC_OT_FUT_OFFSET
+THOST_FTDC_OT_EXEC_OFFSET = _thosttraderapi.THOST_FTDC_OT_EXEC_OFFSET
+THOST_FTDC_OT_PERFORM_OFFSET = _thosttraderapi.THOST_FTDC_OT_PERFORM_OFFSET
 class CThostFtdcDisseminationField(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
@@ -1973,6 +1979,7 @@ class CThostFtdcTradingAccountField(object):
     BizType = property(_thosttraderapi.CThostFtdcTradingAccountField_BizType_get, _thosttraderapi.CThostFtdcTradingAccountField_BizType_set)
     FrozenSwap = property(_thosttraderapi.CThostFtdcTradingAccountField_FrozenSwap_get, _thosttraderapi.CThostFtdcTradingAccountField_FrozenSwap_set)
     RemainSwap = property(_thosttraderapi.CThostFtdcTradingAccountField_RemainSwap_get, _thosttraderapi.CThostFtdcTradingAccountField_RemainSwap_set)
+    OptionValue = property(_thosttraderapi.CThostFtdcTradingAccountField_OptionValue_get, _thosttraderapi.CThostFtdcTradingAccountField_OptionValue_set)
 
     def __init__(self):
         _thosttraderapi.CThostFtdcTradingAccountField_swiginit(self, _thosttraderapi.new_CThostFtdcTradingAccountField())
@@ -2033,6 +2040,7 @@ class CThostFtdcInvestorPositionField(object):
     TasPosition = property(_thosttraderapi.CThostFtdcInvestorPositionField_TasPosition_get, _thosttraderapi.CThostFtdcInvestorPositionField_TasPosition_set)
     TasPositionCost = property(_thosttraderapi.CThostFtdcInvestorPositionField_TasPositionCost_get, _thosttraderapi.CThostFtdcInvestorPositionField_TasPositionCost_set)
     InstrumentID = property(_thosttraderapi.CThostFtdcInvestorPositionField_InstrumentID_get, _thosttraderapi.CThostFtdcInvestorPositionField_InstrumentID_set)
+    OptionValue = property(_thosttraderapi.CThostFtdcInvestorPositionField_OptionValue_get, _thosttraderapi.CThostFtdcInvestorPositionField_OptionValue_set)
 
     def __init__(self):
         _thosttraderapi.CThostFtdcInvestorPositionField_swiginit(self, _thosttraderapi.new_CThostFtdcInvestorPositionField())
@@ -3056,6 +3064,7 @@ class CThostFtdcSyncingTradingAccountField(object):
     SpecProductExchangeMargin = property(_thosttraderapi.CThostFtdcSyncingTradingAccountField_SpecProductExchangeMargin_get, _thosttraderapi.CThostFtdcSyncingTradingAccountField_SpecProductExchangeMargin_set)
     FrozenSwap = property(_thosttraderapi.CThostFtdcSyncingTradingAccountField_FrozenSwap_get, _thosttraderapi.CThostFtdcSyncingTradingAccountField_FrozenSwap_set)
     RemainSwap = property(_thosttraderapi.CThostFtdcSyncingTradingAccountField_RemainSwap_get, _thosttraderapi.CThostFtdcSyncingTradingAccountField_RemainSwap_set)
+    OptionValue = property(_thosttraderapi.CThostFtdcSyncingTradingAccountField_OptionValue_get, _thosttraderapi.CThostFtdcSyncingTradingAccountField_OptionValue_set)
 
     def __init__(self):
         _thosttraderapi.CThostFtdcSyncingTradingAccountField_swiginit(self, _thosttraderapi.new_CThostFtdcSyncingTradingAccountField())
@@ -9446,6 +9455,7 @@ class CThostFtdcSyncDeltaTradingAccountField(object):
     SpecProductExchangeMargin = property(_thosttraderapi.CThostFtdcSyncDeltaTradingAccountField_SpecProductExchangeMargin_get, _thosttraderapi.CThostFtdcSyncDeltaTradingAccountField_SpecProductExchangeMargin_set)
     FrozenSwap = property(_thosttraderapi.CThostFtdcSyncDeltaTradingAccountField_FrozenSwap_get, _thosttraderapi.CThostFtdcSyncDeltaTradingAccountField_FrozenSwap_set)
     RemainSwap = property(_thosttraderapi.CThostFtdcSyncDeltaTradingAccountField_RemainSwap_get, _thosttraderapi.CThostFtdcSyncDeltaTradingAccountField_RemainSwap_set)
+    OptionValue = property(_thosttraderapi.CThostFtdcSyncDeltaTradingAccountField_OptionValue_get, _thosttraderapi.CThostFtdcSyncDeltaTradingAccountField_OptionValue_set)
     SyncDeltaSequenceNo = property(_thosttraderapi.CThostFtdcSyncDeltaTradingAccountField_SyncDeltaSequenceNo_get, _thosttraderapi.CThostFtdcSyncDeltaTradingAccountField_SyncDeltaSequenceNo_set)
 
     def __init__(self):
@@ -11099,6 +11109,8 @@ class CThostFtdcIpAddrParamField(object):
     IsSM = property(_thosttraderapi.CThostFtdcIpAddrParamField_IsSM_get, _thosttraderapi.CThostFtdcIpAddrParamField_IsSM_set)
     IsLocalAddr = property(_thosttraderapi.CThostFtdcIpAddrParamField_IsLocalAddr_get, _thosttraderapi.CThostFtdcIpAddrParamField_IsLocalAddr_set)
     Remark = property(_thosttraderapi.CThostFtdcIpAddrParamField_Remark_get, _thosttraderapi.CThostFtdcIpAddrParamField_Remark_set)
+    Site = property(_thosttraderapi.CThostFtdcIpAddrParamField_Site_get, _thosttraderapi.CThostFtdcIpAddrParamField_Site_set)
+    NetOperator = property(_thosttraderapi.CThostFtdcIpAddrParamField_NetOperator_get, _thosttraderapi.CThostFtdcIpAddrParamField_NetOperator_set)
 
     def __init__(self):
         _thosttraderapi.CThostFtdcIpAddrParamField_swiginit(self, _thosttraderapi.new_CThostFtdcIpAddrParamField())
@@ -11132,6 +11144,8 @@ class CThostFtdcTGIpAddrParamField(object):
     IsSM = property(_thosttraderapi.CThostFtdcTGIpAddrParamField_IsSM_get, _thosttraderapi.CThostFtdcTGIpAddrParamField_IsSM_set)
     IsLocalAddr = property(_thosttraderapi.CThostFtdcTGIpAddrParamField_IsLocalAddr_get, _thosttraderapi.CThostFtdcTGIpAddrParamField_IsLocalAddr_set)
     Remark = property(_thosttraderapi.CThostFtdcTGIpAddrParamField_Remark_get, _thosttraderapi.CThostFtdcTGIpAddrParamField_Remark_set)
+    Site = property(_thosttraderapi.CThostFtdcTGIpAddrParamField_Site_get, _thosttraderapi.CThostFtdcTGIpAddrParamField_Site_set)
+    NetOperator = property(_thosttraderapi.CThostFtdcTGIpAddrParamField_NetOperator_get, _thosttraderapi.CThostFtdcTGIpAddrParamField_NetOperator_set)
 
     def __init__(self):
         _thosttraderapi.CThostFtdcTGIpAddrParamField_swiginit(self, _thosttraderapi.new_CThostFtdcTGIpAddrParamField())
@@ -11144,6 +11158,7 @@ class CThostFtdcQryTGIpAddrParamField(object):
     __repr__ = _swig_repr
     BrokerID = property(_thosttraderapi.CThostFtdcQryTGIpAddrParamField_BrokerID_get, _thosttraderapi.CThostFtdcQryTGIpAddrParamField_BrokerID_set)
     UserID = property(_thosttraderapi.CThostFtdcQryTGIpAddrParamField_UserID_get, _thosttraderapi.CThostFtdcQryTGIpAddrParamField_UserID_set)
+    AppID = property(_thosttraderapi.CThostFtdcQryTGIpAddrParamField_AppID_get, _thosttraderapi.CThostFtdcQryTGIpAddrParamField_AppID_set)
 
     def __init__(self):
         _thosttraderapi.CThostFtdcQryTGIpAddrParamField_swiginit(self, _thosttraderapi.new_CThostFtdcQryTGIpAddrParamField())
@@ -11602,6 +11617,192 @@ class CThostFtdcQryInvestorInfoCommRecField(object):
 
 # Register CThostFtdcQryInvestorInfoCommRecField in _thosttraderapi:
 _thosttraderapi.CThostFtdcQryInvestorInfoCommRecField_swigregister(CThostFtdcQryInvestorInfoCommRecField)
+class CThostFtdcCombLegField(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    CombInstrumentID = property(_thosttraderapi.CThostFtdcCombLegField_CombInstrumentID_get, _thosttraderapi.CThostFtdcCombLegField_CombInstrumentID_set)
+    LegID = property(_thosttraderapi.CThostFtdcCombLegField_LegID_get, _thosttraderapi.CThostFtdcCombLegField_LegID_set)
+    LegInstrumentID = property(_thosttraderapi.CThostFtdcCombLegField_LegInstrumentID_get, _thosttraderapi.CThostFtdcCombLegField_LegInstrumentID_set)
+    Direction = property(_thosttraderapi.CThostFtdcCombLegField_Direction_get, _thosttraderapi.CThostFtdcCombLegField_Direction_set)
+    LegMultiple = property(_thosttraderapi.CThostFtdcCombLegField_LegMultiple_get, _thosttraderapi.CThostFtdcCombLegField_LegMultiple_set)
+    ImplyLevel = property(_thosttraderapi.CThostFtdcCombLegField_ImplyLevel_get, _thosttraderapi.CThostFtdcCombLegField_ImplyLevel_set)
+
+    def __init__(self):
+        _thosttraderapi.CThostFtdcCombLegField_swiginit(self, _thosttraderapi.new_CThostFtdcCombLegField())
+    __swig_destroy__ = _thosttraderapi.delete_CThostFtdcCombLegField
+
+# Register CThostFtdcCombLegField in _thosttraderapi:
+_thosttraderapi.CThostFtdcCombLegField_swigregister(CThostFtdcCombLegField)
+class CThostFtdcQryCombLegField(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    LegInstrumentID = property(_thosttraderapi.CThostFtdcQryCombLegField_LegInstrumentID_get, _thosttraderapi.CThostFtdcQryCombLegField_LegInstrumentID_set)
+
+    def __init__(self):
+        _thosttraderapi.CThostFtdcQryCombLegField_swiginit(self, _thosttraderapi.new_CThostFtdcQryCombLegField())
+    __swig_destroy__ = _thosttraderapi.delete_CThostFtdcQryCombLegField
+
+# Register CThostFtdcQryCombLegField in _thosttraderapi:
+_thosttraderapi.CThostFtdcQryCombLegField_swigregister(CThostFtdcQryCombLegField)
+class CThostFtdcInputOffsetSettingField(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    BrokerID = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_BrokerID_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_BrokerID_set)
+    InvestorID = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_InvestorID_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_InvestorID_set)
+    InstrumentID = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_InstrumentID_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_InstrumentID_set)
+    UnderlyingInstrID = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_UnderlyingInstrID_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_UnderlyingInstrID_set)
+    ProductID = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_ProductID_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_ProductID_set)
+    OffsetType = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_OffsetType_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_OffsetType_set)
+    Volume = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_Volume_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_Volume_set)
+    IsOffset = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_IsOffset_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_IsOffset_set)
+    RequestID = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_RequestID_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_RequestID_set)
+    UserID = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_UserID_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_UserID_set)
+    ExchangeID = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_ExchangeID_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_ExchangeID_set)
+    IPAddress = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_IPAddress_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_IPAddress_set)
+    MacAddress = property(_thosttraderapi.CThostFtdcInputOffsetSettingField_MacAddress_get, _thosttraderapi.CThostFtdcInputOffsetSettingField_MacAddress_set)
+
+    def __init__(self):
+        _thosttraderapi.CThostFtdcInputOffsetSettingField_swiginit(self, _thosttraderapi.new_CThostFtdcInputOffsetSettingField())
+    __swig_destroy__ = _thosttraderapi.delete_CThostFtdcInputOffsetSettingField
+
+# Register CThostFtdcInputOffsetSettingField in _thosttraderapi:
+_thosttraderapi.CThostFtdcInputOffsetSettingField_swigregister(CThostFtdcInputOffsetSettingField)
+class CThostFtdcOffsetSettingField(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    BrokerID = property(_thosttraderapi.CThostFtdcOffsetSettingField_BrokerID_get, _thosttraderapi.CThostFtdcOffsetSettingField_BrokerID_set)
+    InvestorID = property(_thosttraderapi.CThostFtdcOffsetSettingField_InvestorID_get, _thosttraderapi.CThostFtdcOffsetSettingField_InvestorID_set)
+    InstrumentID = property(_thosttraderapi.CThostFtdcOffsetSettingField_InstrumentID_get, _thosttraderapi.CThostFtdcOffsetSettingField_InstrumentID_set)
+    UnderlyingInstrID = property(_thosttraderapi.CThostFtdcOffsetSettingField_UnderlyingInstrID_get, _thosttraderapi.CThostFtdcOffsetSettingField_UnderlyingInstrID_set)
+    ProductID = property(_thosttraderapi.CThostFtdcOffsetSettingField_ProductID_get, _thosttraderapi.CThostFtdcOffsetSettingField_ProductID_set)
+    OffsetType = property(_thosttraderapi.CThostFtdcOffsetSettingField_OffsetType_get, _thosttraderapi.CThostFtdcOffsetSettingField_OffsetType_set)
+    Volume = property(_thosttraderapi.CThostFtdcOffsetSettingField_Volume_get, _thosttraderapi.CThostFtdcOffsetSettingField_Volume_set)
+    IsOffset = property(_thosttraderapi.CThostFtdcOffsetSettingField_IsOffset_get, _thosttraderapi.CThostFtdcOffsetSettingField_IsOffset_set)
+    RequestID = property(_thosttraderapi.CThostFtdcOffsetSettingField_RequestID_get, _thosttraderapi.CThostFtdcOffsetSettingField_RequestID_set)
+    UserID = property(_thosttraderapi.CThostFtdcOffsetSettingField_UserID_get, _thosttraderapi.CThostFtdcOffsetSettingField_UserID_set)
+    ExchangeID = property(_thosttraderapi.CThostFtdcOffsetSettingField_ExchangeID_get, _thosttraderapi.CThostFtdcOffsetSettingField_ExchangeID_set)
+    IPAddress = property(_thosttraderapi.CThostFtdcOffsetSettingField_IPAddress_get, _thosttraderapi.CThostFtdcOffsetSettingField_IPAddress_set)
+    MacAddress = property(_thosttraderapi.CThostFtdcOffsetSettingField_MacAddress_get, _thosttraderapi.CThostFtdcOffsetSettingField_MacAddress_set)
+    ExchangeInstID = property(_thosttraderapi.CThostFtdcOffsetSettingField_ExchangeInstID_get, _thosttraderapi.CThostFtdcOffsetSettingField_ExchangeInstID_set)
+    ExchangeSerialNo = property(_thosttraderapi.CThostFtdcOffsetSettingField_ExchangeSerialNo_get, _thosttraderapi.CThostFtdcOffsetSettingField_ExchangeSerialNo_set)
+    ExchangeProductID = property(_thosttraderapi.CThostFtdcOffsetSettingField_ExchangeProductID_get, _thosttraderapi.CThostFtdcOffsetSettingField_ExchangeProductID_set)
+    ParticipantID = property(_thosttraderapi.CThostFtdcOffsetSettingField_ParticipantID_get, _thosttraderapi.CThostFtdcOffsetSettingField_ParticipantID_set)
+    ClientID = property(_thosttraderapi.CThostFtdcOffsetSettingField_ClientID_get, _thosttraderapi.CThostFtdcOffsetSettingField_ClientID_set)
+    TraderID = property(_thosttraderapi.CThostFtdcOffsetSettingField_TraderID_get, _thosttraderapi.CThostFtdcOffsetSettingField_TraderID_set)
+    InstallID = property(_thosttraderapi.CThostFtdcOffsetSettingField_InstallID_get, _thosttraderapi.CThostFtdcOffsetSettingField_InstallID_set)
+    OrderSubmitStatus = property(_thosttraderapi.CThostFtdcOffsetSettingField_OrderSubmitStatus_get, _thosttraderapi.CThostFtdcOffsetSettingField_OrderSubmitStatus_set)
+    TradingDay = property(_thosttraderapi.CThostFtdcOffsetSettingField_TradingDay_get, _thosttraderapi.CThostFtdcOffsetSettingField_TradingDay_set)
+    SettlementID = property(_thosttraderapi.CThostFtdcOffsetSettingField_SettlementID_get, _thosttraderapi.CThostFtdcOffsetSettingField_SettlementID_set)
+    InsertDate = property(_thosttraderapi.CThostFtdcOffsetSettingField_InsertDate_get, _thosttraderapi.CThostFtdcOffsetSettingField_InsertDate_set)
+    InsertTime = property(_thosttraderapi.CThostFtdcOffsetSettingField_InsertTime_get, _thosttraderapi.CThostFtdcOffsetSettingField_InsertTime_set)
+    CancelTime = property(_thosttraderapi.CThostFtdcOffsetSettingField_CancelTime_get, _thosttraderapi.CThostFtdcOffsetSettingField_CancelTime_set)
+    ExecResult = property(_thosttraderapi.CThostFtdcOffsetSettingField_ExecResult_get, _thosttraderapi.CThostFtdcOffsetSettingField_ExecResult_set)
+    SequenceNo = property(_thosttraderapi.CThostFtdcOffsetSettingField_SequenceNo_get, _thosttraderapi.CThostFtdcOffsetSettingField_SequenceNo_set)
+    FrontID = property(_thosttraderapi.CThostFtdcOffsetSettingField_FrontID_get, _thosttraderapi.CThostFtdcOffsetSettingField_FrontID_set)
+    SessionID = property(_thosttraderapi.CThostFtdcOffsetSettingField_SessionID_get, _thosttraderapi.CThostFtdcOffsetSettingField_SessionID_set)
+    StatusMsg = property(_thosttraderapi.CThostFtdcOffsetSettingField_StatusMsg_get, _thosttraderapi.CThostFtdcOffsetSettingField_StatusMsg_set)
+    ActiveUserID = property(_thosttraderapi.CThostFtdcOffsetSettingField_ActiveUserID_get, _thosttraderapi.CThostFtdcOffsetSettingField_ActiveUserID_set)
+    BrokerOffsetSettingSeq = property(_thosttraderapi.CThostFtdcOffsetSettingField_BrokerOffsetSettingSeq_get, _thosttraderapi.CThostFtdcOffsetSettingField_BrokerOffsetSettingSeq_set)
+
+    def __init__(self):
+        _thosttraderapi.CThostFtdcOffsetSettingField_swiginit(self, _thosttraderapi.new_CThostFtdcOffsetSettingField())
+    __swig_destroy__ = _thosttraderapi.delete_CThostFtdcOffsetSettingField
+
+# Register CThostFtdcOffsetSettingField in _thosttraderapi:
+_thosttraderapi.CThostFtdcOffsetSettingField_swigregister(CThostFtdcOffsetSettingField)
+class CThostFtdcCancelOffsetSettingField(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    BrokerID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_BrokerID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_BrokerID_set)
+    InvestorID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_InvestorID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_InvestorID_set)
+    InstrumentID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_InstrumentID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_InstrumentID_set)
+    UnderlyingInstrID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_UnderlyingInstrID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_UnderlyingInstrID_set)
+    ProductID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_ProductID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_ProductID_set)
+    OffsetType = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_OffsetType_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_OffsetType_set)
+    Volume = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_Volume_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_Volume_set)
+    IsOffset = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_IsOffset_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_IsOffset_set)
+    RequestID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_RequestID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_RequestID_set)
+    UserID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_UserID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_UserID_set)
+    ExchangeID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_ExchangeID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_ExchangeID_set)
+    IPAddress = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_IPAddress_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_IPAddress_set)
+    MacAddress = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_MacAddress_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_MacAddress_set)
+    ExchangeInstID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_ExchangeInstID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_ExchangeInstID_set)
+    ExchangeSerialNo = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_ExchangeSerialNo_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_ExchangeSerialNo_set)
+    ExchangeProductID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_ExchangeProductID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_ExchangeProductID_set)
+    TraderID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_TraderID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_TraderID_set)
+    InstallID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_InstallID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_InstallID_set)
+    ParticipantID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_ParticipantID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_ParticipantID_set)
+    ClientID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_ClientID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_ClientID_set)
+    OrderActionStatus = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_OrderActionStatus_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_OrderActionStatus_set)
+    StatusMsg = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_StatusMsg_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_StatusMsg_set)
+    ActionLocalID = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_ActionLocalID_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_ActionLocalID_set)
+    ActionDate = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_ActionDate_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_ActionDate_set)
+    ActionTime = property(_thosttraderapi.CThostFtdcCancelOffsetSettingField_ActionTime_get, _thosttraderapi.CThostFtdcCancelOffsetSettingField_ActionTime_set)
+
+    def __init__(self):
+        _thosttraderapi.CThostFtdcCancelOffsetSettingField_swiginit(self, _thosttraderapi.new_CThostFtdcCancelOffsetSettingField())
+    __swig_destroy__ = _thosttraderapi.delete_CThostFtdcCancelOffsetSettingField
+
+# Register CThostFtdcCancelOffsetSettingField in _thosttraderapi:
+_thosttraderapi.CThostFtdcCancelOffsetSettingField_swigregister(CThostFtdcCancelOffsetSettingField)
+class CThostFtdcQryOffsetSettingField(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    BrokerID = property(_thosttraderapi.CThostFtdcQryOffsetSettingField_BrokerID_get, _thosttraderapi.CThostFtdcQryOffsetSettingField_BrokerID_set)
+    InvestorID = property(_thosttraderapi.CThostFtdcQryOffsetSettingField_InvestorID_get, _thosttraderapi.CThostFtdcQryOffsetSettingField_InvestorID_set)
+    ProductID = property(_thosttraderapi.CThostFtdcQryOffsetSettingField_ProductID_get, _thosttraderapi.CThostFtdcQryOffsetSettingField_ProductID_set)
+    OffsetType = property(_thosttraderapi.CThostFtdcQryOffsetSettingField_OffsetType_get, _thosttraderapi.CThostFtdcQryOffsetSettingField_OffsetType_set)
+
+    def __init__(self):
+        _thosttraderapi.CThostFtdcQryOffsetSettingField_swiginit(self, _thosttraderapi.new_CThostFtdcQryOffsetSettingField())
+    __swig_destroy__ = _thosttraderapi.delete_CThostFtdcQryOffsetSettingField
+
+# Register CThostFtdcQryOffsetSettingField in _thosttraderapi:
+_thosttraderapi.CThostFtdcQryOffsetSettingField_swigregister(CThostFtdcQryOffsetSettingField)
+class CThostFtdcAddrAppIDRelationField(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    BrokerID = property(_thosttraderapi.CThostFtdcAddrAppIDRelationField_BrokerID_get, _thosttraderapi.CThostFtdcAddrAppIDRelationField_BrokerID_set)
+    Address = property(_thosttraderapi.CThostFtdcAddrAppIDRelationField_Address_get, _thosttraderapi.CThostFtdcAddrAppIDRelationField_Address_set)
+    DRIdentityID = property(_thosttraderapi.CThostFtdcAddrAppIDRelationField_DRIdentityID_get, _thosttraderapi.CThostFtdcAddrAppIDRelationField_DRIdentityID_set)
+    AppID = property(_thosttraderapi.CThostFtdcAddrAppIDRelationField_AppID_get, _thosttraderapi.CThostFtdcAddrAppIDRelationField_AppID_set)
+
+    def __init__(self):
+        _thosttraderapi.CThostFtdcAddrAppIDRelationField_swiginit(self, _thosttraderapi.new_CThostFtdcAddrAppIDRelationField())
+    __swig_destroy__ = _thosttraderapi.delete_CThostFtdcAddrAppIDRelationField
+
+# Register CThostFtdcAddrAppIDRelationField in _thosttraderapi:
+_thosttraderapi.CThostFtdcAddrAppIDRelationField_swigregister(CThostFtdcAddrAppIDRelationField)
+class CThostFtdcQryAddrAppIDRelationField(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    BrokerID = property(_thosttraderapi.CThostFtdcQryAddrAppIDRelationField_BrokerID_get, _thosttraderapi.CThostFtdcQryAddrAppIDRelationField_BrokerID_set)
+
+    def __init__(self):
+        _thosttraderapi.CThostFtdcQryAddrAppIDRelationField_swiginit(self, _thosttraderapi.new_CThostFtdcQryAddrAppIDRelationField())
+    __swig_destroy__ = _thosttraderapi.delete_CThostFtdcQryAddrAppIDRelationField
+
+# Register CThostFtdcQryAddrAppIDRelationField in _thosttraderapi:
+_thosttraderapi.CThostFtdcQryAddrAppIDRelationField_swigregister(CThostFtdcQryAddrAppIDRelationField)
+class CThostFtdcWechatUserSystemInfoField(object):
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+    BrokerID = property(_thosttraderapi.CThostFtdcWechatUserSystemInfoField_BrokerID_get, _thosttraderapi.CThostFtdcWechatUserSystemInfoField_BrokerID_set)
+    UserID = property(_thosttraderapi.CThostFtdcWechatUserSystemInfoField_UserID_get, _thosttraderapi.CThostFtdcWechatUserSystemInfoField_UserID_set)
+    WechatCltSysInfoLen = property(_thosttraderapi.CThostFtdcWechatUserSystemInfoField_WechatCltSysInfoLen_get, _thosttraderapi.CThostFtdcWechatUserSystemInfoField_WechatCltSysInfoLen_set)
+    WechatCltSysInfo = property(_thosttraderapi.CThostFtdcWechatUserSystemInfoField_WechatCltSysInfo_get, _thosttraderapi.CThostFtdcWechatUserSystemInfoField_WechatCltSysInfo_set)
+    ClientIPPort = property(_thosttraderapi.CThostFtdcWechatUserSystemInfoField_ClientIPPort_get, _thosttraderapi.CThostFtdcWechatUserSystemInfoField_ClientIPPort_set)
+    ClientLoginTime = property(_thosttraderapi.CThostFtdcWechatUserSystemInfoField_ClientLoginTime_get, _thosttraderapi.CThostFtdcWechatUserSystemInfoField_ClientLoginTime_set)
+    ClientAppID = property(_thosttraderapi.CThostFtdcWechatUserSystemInfoField_ClientAppID_get, _thosttraderapi.CThostFtdcWechatUserSystemInfoField_ClientAppID_set)
+    ClientPublicIP = property(_thosttraderapi.CThostFtdcWechatUserSystemInfoField_ClientPublicIP_get, _thosttraderapi.CThostFtdcWechatUserSystemInfoField_ClientPublicIP_set)
+    ClientLoginRemark = property(_thosttraderapi.CThostFtdcWechatUserSystemInfoField_ClientLoginRemark_get, _thosttraderapi.CThostFtdcWechatUserSystemInfoField_ClientLoginRemark_set)
+
+    def __init__(self):
+        _thosttraderapi.CThostFtdcWechatUserSystemInfoField_swiginit(self, _thosttraderapi.new_CThostFtdcWechatUserSystemInfoField())
+    __swig_destroy__ = _thosttraderapi.delete_CThostFtdcWechatUserSystemInfoField
+
+# Register CThostFtdcWechatUserSystemInfoField in _thosttraderapi:
+_thosttraderapi.CThostFtdcWechatUserSystemInfoField_swigregister(CThostFtdcWechatUserSystemInfoField)
 class CThostFtdcFrontInfoField(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
@@ -12087,6 +12288,27 @@ class CThostFtdcTraderSpi(object):
     def OnRspQryInvestorInfoCommRec(self, pInvestorInfoCommRec, pRspInfo, nRequestID, bIsLast):
         return _thosttraderapi.CThostFtdcTraderSpi_OnRspQryInvestorInfoCommRec(self, pInvestorInfoCommRec, pRspInfo, nRequestID, bIsLast)
 
+    def OnRspQryCombLeg(self, pCombLeg, pRspInfo, nRequestID, bIsLast):
+        return _thosttraderapi.CThostFtdcTraderSpi_OnRspQryCombLeg(self, pCombLeg, pRspInfo, nRequestID, bIsLast)
+
+    def OnRspOffsetSetting(self, pInputOffsetSetting, pRspInfo, nRequestID, bIsLast):
+        return _thosttraderapi.CThostFtdcTraderSpi_OnRspOffsetSetting(self, pInputOffsetSetting, pRspInfo, nRequestID, bIsLast)
+
+    def OnRspCancelOffsetSetting(self, pInputOffsetSetting, pRspInfo, nRequestID, bIsLast):
+        return _thosttraderapi.CThostFtdcTraderSpi_OnRspCancelOffsetSetting(self, pInputOffsetSetting, pRspInfo, nRequestID, bIsLast)
+
+    def OnRtnOffsetSetting(self, pOffsetSetting):
+        return _thosttraderapi.CThostFtdcTraderSpi_OnRtnOffsetSetting(self, pOffsetSetting)
+
+    def OnErrRtnOffsetSetting(self, pInputOffsetSetting, pRspInfo):
+        return _thosttraderapi.CThostFtdcTraderSpi_OnErrRtnOffsetSetting(self, pInputOffsetSetting, pRspInfo)
+
+    def OnErrRtnCancelOffsetSetting(self, pCancelOffsetSetting, pRspInfo):
+        return _thosttraderapi.CThostFtdcTraderSpi_OnErrRtnCancelOffsetSetting(self, pCancelOffsetSetting, pRspInfo)
+
+    def OnRspQryOffsetSetting(self, pOffsetSetting, pRspInfo, nRequestID, bIsLast):
+        return _thosttraderapi.CThostFtdcTraderSpi_OnRspQryOffsetSetting(self, pOffsetSetting, pRspInfo, nRequestID, bIsLast)
+
     def __init__(self):
         if self.__class__ == CThostFtdcTraderSpi:
             _self = None
@@ -12157,6 +12379,12 @@ class CThostFtdcTraderApi(object):
 
     def SubmitUserSystemInfo(self, pUserSystemInfo):
         return _thosttraderapi.CThostFtdcTraderApi_SubmitUserSystemInfo(self, pUserSystemInfo)
+
+    def RegisterWechatUserSystemInfo(self, pUserSystemInfo):
+        return _thosttraderapi.CThostFtdcTraderApi_RegisterWechatUserSystemInfo(self, pUserSystemInfo)
+
+    def SubmitWechatUserSystemInfo(self, pUserSystemInfo):
+        return _thosttraderapi.CThostFtdcTraderApi_SubmitWechatUserSystemInfo(self, pUserSystemInfo)
 
     def ReqUserLogin(self, pReqUserLoginField, nRequestID):
         return _thosttraderapi.CThostFtdcTraderApi_ReqUserLogin(self, pReqUserLoginField, nRequestID)
@@ -12493,6 +12721,18 @@ class CThostFtdcTraderApi(object):
 
     def ReqQryInvestorInfoCommRec(self, pQryInvestorInfoCommRec, nRequestID):
         return _thosttraderapi.CThostFtdcTraderApi_ReqQryInvestorInfoCommRec(self, pQryInvestorInfoCommRec, nRequestID)
+
+    def ReqQryCombLeg(self, pQryCombLeg, nRequestID):
+        return _thosttraderapi.CThostFtdcTraderApi_ReqQryCombLeg(self, pQryCombLeg, nRequestID)
+
+    def ReqOffsetSetting(self, pInputOffsetSetting, nRequestID):
+        return _thosttraderapi.CThostFtdcTraderApi_ReqOffsetSetting(self, pInputOffsetSetting, nRequestID)
+
+    def ReqCancelOffsetSetting(self, pInputOffsetSetting, nRequestID):
+        return _thosttraderapi.CThostFtdcTraderApi_ReqCancelOffsetSetting(self, pInputOffsetSetting, nRequestID)
+
+    def ReqQryOffsetSetting(self, pQryOffsetSetting, nRequestID):
+        return _thosttraderapi.CThostFtdcTraderApi_ReqQryOffsetSetting(self, pQryOffsetSetting, nRequestID)
 
 # Register CThostFtdcTraderApi in _thosttraderapi:
 _thosttraderapi.CThostFtdcTraderApi_swigregister(CThostFtdcTraderApi)
