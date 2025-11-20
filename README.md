@@ -1,7 +1,9 @@
 # ctp_swig_build 项目说明
-**一句话介绍项目**：一键实现自动编译CTP C++接口为Python接口。
+**一句话介绍本项目**：一键实现自动编译 CTP C++ 接口为 Python 接口。
 
-**Tips**: 如果你需要使用 Pybind11 编译方式，参考另外一个项目：https://github.com/Homalos/ctp
+戳这里可以直接体验编译好的 Python API 文件 => ：[Releases](https://github.com/Lumosylva/ctp_swig_build/releases)
+
+**Tips**: 如果你对使用 Pybind11 编译方式感兴趣，可参考另外一个项目：https://github.com/Homalos/ctp，文档末尾有 Swig 编译方式与 Pybind11 编译方式的对比，国内著名量化开源框架 vn.py 底层就是使用的 Pybind11 编译方式。
 
 ## 1. 前言
 
