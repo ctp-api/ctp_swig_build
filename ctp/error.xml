@@ -114,6 +114,7 @@
 	<error id="OUT_OF_PRICEINTERVAL" value="114" prompt="CTP:当前价差禁止询价"/>
 	<error id="ORDER_FREQ_LIMIT" value="116" prompt="CTP:下单频率限制"/>
 	<error id="WEAK_PASSWORD" value="131" prompt="CTP：您当前密码为弱密码，请修改成强密码后重新登录"/>
+	<error id="SIMPLE_PASSWORD" value="132" prompt="CTP：您输入的密码过于简单"/>
 	<error id="EXEC_FORBIDDEN_TIME" value="139" prompt="CTP:当前时间禁止行权"/>
 	<error id="FIRST_LOGIN" value="140" prompt="CTP:首次登录必须修改密码，请修改密码后重新登录"/>
 	<error id="PWD_OUT_OF_DATE" value="141" prompt="CTP:您当前密码已过期，请修改后登录"/>
@@ -137,6 +138,10 @@
 	<error id="OVER_INVST_PARKED_ORDER_LIMIT" value="159" prompt="CTP:超过个人预埋单最大量限制"/>
 	<error id="OVER_BROKER_PARKED_ORDER_LIMIT" value="160" prompt="CTP:超过经纪公司预埋单最大量限制"/>
 	<error id="PARKED_ORDER_WRONG_TYPE" value="161" prompt="CTP:预埋单:不支持的触发类型"/>
+	<error id="NOT_TRADING_PERIOD" value="162" prompt="CTP:产品不在可以交易的阶段"/>
+	<error id="PRICE_OVER_LIMIT" value="163" prompt="CTP:报单价格不在涨跌停板价范围内"/>
+	<error id="VOLUME_NOT_VALID" value="164" prompt="CTP:下单数量不符合交易所规范"/>
+	<error id="PRICE_WRONG_TICK" value="165" prompt="CTP:报单价格非最小变动价位整数倍"/>
 	<!--转帐系统错误代码 -->
 	<error id="SEND_INSTITUTION_CODE_ERROR" value="1000" prompt="CTP:银期转账：发送机构代码错误"/>
 	<error id="NO_GET_PLATFORM_SN" value="1001" prompt="CTP:银期转账：取平台流水号错误"/>
@@ -296,6 +301,9 @@
    
    <error id="OVER_SUB_INST_LIMIT" value="6000" prompt="CTP:sub too many insts"/>
    
-
-
+   <error id="OFFSET_INSTR_PROD" value="6001" prompt="CTP:对冲的合约/产品设置不合法"/>
+   <error id="OFFSET_VOLUME" value="6002" prompt="CTP:对冲的数量设置不合法"/>
+   <error id="OFFSET_SETTING_DOUBLE_SET" value="6004" prompt="CTP:对冲设置不能重复提交，需要先撤销再设置"/>
+   <error id="OFFSET_SETTING_REC_NOT_FOUND" value="6005" prompt="CTP:撤销对冲设置未找到记录"/>
+   <error id="OFFSET_SETTING_STATUS_ERR" value="6006" prompt="CTP:对冲状态不对，不能撤销"/>
 </errors>
