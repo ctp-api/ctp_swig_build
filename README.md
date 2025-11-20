@@ -111,7 +111,7 @@
 
 运行 `ctp_demo.py` 结果：
 
-![demo_result](D:\Project\PycharmProjects\ctp_swig_build\assets\demo_result.jpg)
+![demo_result](assets/demo_result.jpg)
 
 ## 6. 编译脚本主要做了什么：
 
@@ -187,11 +187,11 @@ ctp_swig_build/
 
 当你打开 `thostmduserapi.py` 或 `thosttraderapi.py` 时，可能会出现以下错误
 
-![thostmduserapi_error](/assets/thostmduserapi_error.png)
+![thostmduserapi_error](assets/thostmduserapi_error.png)
 
 只需改为以下代码即可解决：
 
-![thostmduserapi_no_error](/assets/thostmduserapi_no_error.png)
+![thostmduserapi_no_error](assets/thostmduserapi_no_error.png)
 
 手动编译教程：
 
