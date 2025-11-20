@@ -29,7 +29,7 @@
 
 - **安装 Visual Studio**
 
-  主要是用到其中的 `MSVC` 和 `Ninja`，本文所用的是 **Visual Studio 2022**，注意安装 Visual Studio 的时候勾选上**C++**开发。
+  主要是用到其中的 `MSVC` 和 `Ninja`，本文所用的是 **Visual Studio 2022**，注意安装 Visual Studio 的时候勾选上 **C++** 开发。
 
 ## 3. 安装UV和Python环境   
 
