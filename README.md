@@ -1,4 +1,4 @@
-# 项目说明
+# ctp_swig_build 项目说明
 **一句话介绍项目**：一键实现自动编译CTP C++接口为Python接口。
 
 **Tips**: 如果你需要使用 Pybind11 编译方式，参考另外一个项目：https://github.com/Homalos/ctp
@@ -9,15 +9,25 @@
 
 ## 2. 准备工作
 
-- **下载 CTP API 压缩包**
+- **下载官方 CTP API**
 
-从 SimNow [官网](https://www.simnow.com.cn/static/apiDownload.action)PC标签页下载 CTP API 压缩包，注意非交易时间段此网站可能会出现不能访问，可在交易日访问。这里以 `v6.7.10` **看穿式监管生产版本**为例（你可以自行用需要的版本，步骤一样）
+  从 SimNow [官网](https://www.simnow.com.cn/static/apiDownload.action)PC标签页下载 CTP API 压缩包，注意非交易时间段此网站可能会出现不能访问，可在交易日访问。这里以 `v6.7.10` **看穿式监管生产版本**为例（你可以自行用需要的版本，步骤一样）
 
 ![ctp_download](assets/ctp_download.png)
 
-64位的API文件包解压后清单如下：
+  64位的API文件包解压后清单如下：
 
 ![ctp_zip](assets/ctp_zip.png)
+
+- 下载本项目
+
+  ![image-20251120151603432](C:\Users\donny\AppData\Roaming\Typora\typora-user-images\image-20251120151603432.png)
+
+  使用 `git clone` 或者  `Download ZIP` 将本项目下载到本地，将上述所有 API 文件复制并替换掉 **ctp** 内文件。
+
+  完成之后项目结构如下：
+
+  ![project](assets/project.jpg)
 
 - **安装 Swig**
 
