@@ -1,7 +1,7 @@
 [project]
 name = "ctp-swig-build"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.0.1"
+description = "一键实现自动编译CTP C++接口为Python接口"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
