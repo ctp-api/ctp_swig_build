@@ -1,117 +1,125 @@
-# ctp_swig_build 项目说明
-**一句话介绍本项目**：一键实现自动编译 CTP C++ 接口为 Python 接口。
+<h1 align="center">ctp_swig_build</h1>
 
-戳这里可以直接体验编译好的 Python API 文件 => ：[Releases](https://github.com/Lumosylva/ctp_swig_build/releases)
+<p align="center">
+_✨ Enables one-click automatic compilation of CTP C++ interfaces into Python interfaces ✨_
+</p>
 
-**Tips**: 如果你对使用 Pybind11 编译方式感兴趣，可参考另外一个项目：https://github.com/Homalos/ctp
+<p align="center">
+  English |
+  <a href="README_CN.md">简体中文</a>
+</p>
+**A brief introduction to this project:** Enables one-click automatic compilation of CTP C++ interfaces into Python interfaces.
 
-本文档末尾有 Swig 编译方式与 Pybind11 编译方式的对比，国内著名量化开源框架 vn.py 底层就是使用的 Pybind11 编译方式。
+Click here to directly experience the compiled Python API files =>: [Releases](https://github.com/Lumosylva/ctp_swig_build/releases)
 
-## 1. 前言
+**Tips:** If you are interested in using the Pybind11 compilation method, please refer to another project [ctp](https://github.com/Homalos/ctp).
 
-目前上期技术CTP接口提供的API版本是 C++版本，本文主要介绍在Windows 64位平台下利用 Swig 工具将CTP C++接口转换为Python可调用的接口。
+A comparison of the Swig and Pybind11 compilation methods is provided at the end of this document. The well-known domestic quantitative open-source framework vn.py uses the Pybind11 compilation method at its core.
 
-## 2. 准备工作
+## 1. Introduction
 
-- **下载官方 CTP API**
+Currently, the API version provided by the CTP interface in the previous issue is a C++ version. This article mainly introduces how to use the Swig tool on a Windows 64-bit platform to convert the CTP C++ interface into a Python-callable interface.
 
-  从 SimNow [官网](https://www.simnow.com.cn/static/apiDownload.action)PC标签页下载 CTP API 压缩包，注意非交易时间段此网站可能会出现不能访问，可在交易日访问。这里以 `v6.7.10` **看穿式监管生产版本**为例（你可以自行用需要的版本，步骤一样）
+## 2. Preparation
+
+- **Download the Official CTP API**
+
+Download the CTP API compressed package from the [SimNow](https://www.simnow.com.cn/static/apiDownload.action) PC tab. Note that this website may be inaccessible outside of trading hours; it is accessible on trading days. This example uses `v6.7.10` **the production version with transparent monitoring** (you can use your desired version; the steps are the same).
 
 ![ctp_download](assets/ctp_download.png)
 
-  64位的API文件包解压后清单如下：
+The unzipped 64-bit API file package looks like this:
 
 ![ctp_zip](assets/ctp_zip.png)
 
-- 下载本项目
+- Download this project
 
-  使用 `git clone` 或者  `Download ZIP` (在gitcode上是点击**下载zip**)将本项目下载到本地，然后将上述所有 API 文件复制并替换掉 **ctp** 内文件。
+Use `git clone` or `Download ZIP` (on gitcode, click **Download zip**) to download this project to your local machine. Then copy all the API files mentioned above and replace the files in the **ctp** folder.
 
-  ![ctp_files](assets/ctp_files.jpg)
+![ctp_files](assets/ctp_files.jpg)
 
-  完成之后项目结构如下：
+The completed project structure is as follows:
 
-  ![project](assets/project.jpg)
+![project](assets/project.jpg)
 
-- **安装 Swig**
+- **Installing Swig**
 
-  本文中所用的Swig是 **`swigwin-4.3.0`** 版本，[点击此处下载](https://zenlayer.dl.sourceforge.net/project/swig/swigwin/swigwin-4.3.0/swigwin-4.3.0.zip?viasf=1)，更多Swig版本 [下载地址](https://sourceforge.net/projects/swig/files/swigwin/)。
+The Swig used in this article is version **`swigwin-4.3.0`**, [click here to download](https://zenlayer.dl.sourceforge.net/project/swig/swigwin/swigwin-4.3.0/swigwin-4.3.0.zip?viasf=1). More Swig versions can be downloaded from [swigwin](https://sourceforge.net/projects/swig/files/swigwin/).
 
-- **安装 Python**
+- **Installing Python**
 
-  推荐使用 `UV` 来安装，下面有UV的安装使用说明。也可以使用其他 Python 管理工具，但是需自行配置相关环境。注意要安装64位Python版本，将环境变量配置好。本文所用的是 **`3.13.6`** 版本，如果自用到别的版本，下列步骤一致。
+It is recommended to use `UV` for installation. Instructions for installing and using UV are provided below. Other Python management tools can also be used, but you will need to configure the relevant environment yourself. Note that you must install a 64-bit Python version and configure the environment variables correctly. This article uses version **3.13.6**. If you are using a different version, the following steps are the same.
 
-- **安装 Visual Studio**
+- **Install Visual Studio**
 
-  主要是用到其中的 `MSVC` 和 `Ninja`，本文所用的是 **Visual Studio 2022**，注意安装 Visual Studio 的时候勾选上 **C++** 开发。
+This mainly uses `MSVC` and `Ninja`. This article uses **Visual Studio 2022**. Note that you should select **C++** development when installing Visual Studio.
 
-## 3. 安装UV和Python环境   
+## 3. Installing UV and Python Environment
 
-本项目推荐使用 `UV` 来管理 Python 安装和依赖包安装
+This project recommends using `UV` to manage Python installations and dependency installations.
 
-1. 安装UV
+1. Installing UV
 
-   i. 在Windows系统
+i. On Windows
 
-   **方式一：全局安装(推荐方式，二选一)**
+**Method 1: Global Installation (Recommended, choose one)**
 
-   在PowerShell中运行下述命令(注意不是cmd)
+Run the following command in PowerShell (not cmd):
 
-   ```bash
-   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-   ```
+```bash
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
 
-   **方式二：单独在 Python 环境中安装(二选一)**
+**Method 2: Installing in the Python Environment Separately (Choose one)**
 
-   ```bash
-   pip install uv
-   ```
+```bash
+pip install uv
+```
 
-   ii. 在Linux系统
+ii. On Linux
 
-   ```bash
-   curl -LsSf https://astral.sh/uv/install.sh | sh
-   ```
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
-3. 安装 Python(方式一进行这一步，方式二直接跳过)，你可以安装自己需要的版本
+2. Install Python (Perform this step if you are using Method 1, skip this step if you are using Method 2). You can install the version you need.
 
-   ```bash
-   uv python install 3.13
-   ```
+```bash
+uv python install 3.13
+```
 
-3. 在项目根目录下安装 Python 虚拟环境(与上一步全局安装的 Python 环境是隔离的)，同时安装项目依赖，以确保环境的一致性。`uv sync` 安装的依赖包依据 **`pyproject.toml`** 文件中 dependencies 中定义的库名来安装。
+3. Install a Python virtual environment in the project root directory (isolated from the globally installed Python environment in the previous step), and install project dependencies to ensure environment consistency. The dependencies installed by `uv sync` are based on the library names defined in the `dependencies` section of the `pyproject.toml` file.
 
-   ```bash
-   uv venv --python 3.13 .venv
-   uv sync
-   ```
+```bash
+uv venv --python 3.13 .venv
+uv sync
+```
 
+## 4. Usage
 
-## 4. 使用
+The project uses a combination of `SWIG + MSVC + Meson + Stubgen` to compile the CTP C++ API and generate Python extension modules.
 
-项目使用 `SWIG + MSVC + Meson + Stubgen` 的组合来编译CTP C++ API生成Python扩展模块。
+### Usage:
 
-### 使用方法：
+1. Activate the Python virtual environment:
 
-1. 激活 Python 虚拟环境：
+```bash
+.venv\Scripts\activate
+```
 
-   ```bash
-   .venv\Scripts\activate
-   ```
+2. Run the build:
 
-2. 运行构建：
+```bash
+python build.py
+```
 
-   ```bash
-   python build.py
-   ```
+3. Test the interface:
 
-3. 测试接口：
+The demo file is `ctp_demo.py`; simply run this.
 
-   demo文件为 `ctp_demo.py`，运行这个即可。
+## 5. Execution Results Display
 
-## 5. 执行结果展示
-
-运行 `python build.py` 结果
+Running `python build.py`:
 
 ![build1](assets/build1.jpg)
 
@@ -123,165 +131,190 @@
 
 ![build5](assets/build5.jpg)
 
-运行 `ctp_demo.py` 结果：
+Running `ctp_demo.py`:
 
 ![demo_result](assets/demo_result.jpg)
 
-## 6. 编译脚本主要做了什么：
+## 6. What the Compilation Script Mainly Does:
 
-build.py文件：
+build.py file:
 
-- 检查所有必要的依赖项（SWIG、Meson、Ninja）
-- 自动设置和清理构建目录
-- 配置Meson构建（支持MSVC环境）
-- 执行编译和安装过程，编译生成pyd文件
-- pyd文件复制到项目根目录的ctp文件夹
-- 自动重命名，在文件名前添加下划线
-- 同时处理相关的.lib文件
-- 使用mypy自带的stubgen生成类型存根文件
-- 提供了多种命令行选项（仅配置、跳过存根生成等）
+- Check all necessary dependencies (SWIG, Meson, Ninja)
 
-meson.build文件：
+- Automatically set up and clean the build directory
 
-- 配置了C++17编译环境
+- Configure Meson build (supports MSVC environment)
 
-- 自动查找Python解释器和SWIG工具
+- Execute the compilation and installation process, generating .pyd files
 
-- 为行情API（thostmduserapi）和交易API（thosttraderapi）分别配置SWIG包装代码生成
+- Copy the .pyd files to the ctp folder in the project root directory
 
-- 设置了正确的包含目录和库文件链接
+- Automatically rename the files, adding an underscore before the filename
 
-- 自动安装生成的Python文件和DLL文件
+- Simultaneously processes related .lib files
 
+- Generates type stub files using mypy's built-in stubgen
 
-### 主要特点：
+Provides various command-line options (configure only, skip stub generation, etc.)
 
-- ✅ 支持多线程（-threads参数）
-- ✅ 自动处理中文编码转换
-- ✅ 生成类型存根文件提供IDE支持
-- ✅ 支持Windows MSVC编译环境
-- ✅ 自动复制必要的文件
-- ✅ 无需打开Visual Studio即可实现一键编译
+meson.build file:
 
-这样可以确保SWIG生成的Python模块能够正确找到并导入底层的C扩展模块，构建完成后，将得到完整的Python扩展模块，可以直接在Python代码中使用CTP API的所有功能。
+- Configures the C++17 compilation environment
 
-## 7. 项目结构
+- Automatically finds the Python interpreter and SWIG tools
+
+- Configures SWIG wrapper code generation for the market data API (thostmduserapi) and trading API (thosttraderapi) respectively
+
+- Sets the correct include directories and library file links
+
+- Automatically installs the generated Python files and DLL files
+
+### Key Features:
+
+- ✅ Supports multithreading (-threads parameter)
+
+- ✅ Automatically handles Chinese encoding conversion
+
+- ✅ Provides IDE support for type stub file generation
+
+- ✅ Supports Windows MSVC compilation environment
+
+- ✅ Automatically copies necessary files
+
+- ✅ No need to open Visual Studio Studio can perform one-click compilation.
+
+This ensures that the Python module generated by SWIG can correctly find and import the underlying C extension module. After the build is complete, you will get a full Python extension module, allowing you to directly use all the functionality of the CTP API in your Python code.
+
+## 7. Project Structure
 
 ```reStructuredText
 ctp_swig_build/
-├── 📁 assets/                      # 资源文件夹，包含一些图片展示
-├── 📁 build/					    # 编译过程文件夹，不用关注
-├── 📁 ctp/                         # CTP API文件文件夹，存放CTP API相关文件
-│   ├── 📁 _thostmduserapi.cp313-win_amd64.pyd		# 重命名后的行情API模块，由编译脚本自动生成
-│   ├── 📁 _thostmduserapi.cp313-win_amd64.lib		# 重命名后的库文件，由编译脚本自动生成
-│   ├── 📁 _thosttraderapi.cp313-win_amd64.pyd		# 重命名后的交易API模块，由编译脚本自动生成
-│   ├── 📁 _thosttraderapi.cp313-win_amd64.lib		# 重命名后的库文件，由编译脚本自动生成
-│   ├── 📁 thostmduserapi.i		    # 接口文件，用于告诉swig为哪些行情类和方法创建接口。
-│   ├── 📁 thosttraderapi.i		    # 接口文件，用于告诉swig为哪些交易类和方法创建接口。
-│   ├── 📁 thostmduserapi.py		# SWIG生成的Python 行情接口
-│   ├── 📁 thosttraderapi.py		# SWIG生成的Python 交易接口
-│   ├── 📁 thostmduserapi.pyi		# 利用mypy自带的stubgen生成行情存根文件，作用是在IDE中使用时提供代码提示
-│   ├── 📁 thosttraderapi.pyi		# 利用mypy自带的stubgen生成交易存根文件，作用是在IDE中使用时提供代码提示
-│   ├── 📁 __init__.py				# Python包初始化文件
-│   ├── 📁 thostmduserapi_se.dll	# 行情API动态库
-│   ├── 📁 thosttraderapi_se.dll	# 交易API动态库
-│   └── 📁 ...                      # 其他文件
-├── 📁 build.py                     # 编译脚本
-├── 📁 ctp_demo.py                  # 测试demo
-├── 📁 meson.build                  # meson配置文件(不懂meson配置不用关注)
-├── 📁 pyproject.toml               # Python项目管理配置文件，由UV自动生成，包含项目信息
-├── 📁 README.md                    # 项目说明文档
-├── 📁 uv.lock                      # UV锁定文件，由UV自动生成，不用关注
-└── 📁 ...                          # 其他文件
+├── 📁 assets/ 	# Resource folder, containing some image displays
+├── 📁 build/ 	# Compilation process folder, no need to pay attention
+├── 📁 ctp/ 	# CTP API file folder, storing CTP API related files
+│ ├── 📁 _thostmduserapi.cp313-win_amd64.pyd # Renamed market data API module, automatically generated by the compilation script
+│ ├── 📁 _thostmduserapi.cp313-win_amd64.lib # Renamed library file, automatically generated by the compilation script
+│ ├── 📁 _thosttraderapi.cp313-win_amd64.pyd # Renamed trading API module, automatically generated by the compilation script
+│ ├── 📁 _thosttraderapi.cp313-win_amd64.lib # Renamed library file, automatically generated by the compilation script
+│ ├── 📁 thostmduserapi.i # Interface file, used to tell SWIG which market data classes and methods to create interfaces for.
+│ ├── 📁 thosttraderapi.i # Interface file, used to tell SWIG which trading classes and methods to create interfaces for.
+│ ├── 📁 thostmduserapi.py # Python market data interface generated by SWIG
+│ ├── 📁 thosttraderapi.py # Python trading interface generated by SWIG
+│ ├── 📁 thostmduserapi.pyi # Generates market data stub files using mypy's built-in stubgen, providing code suggestions when used in an IDE
+│ ├── 📁 thosttraderapi.pyi # Generates trading stub files using mypy's built-in stubgen, providing code suggestions when used in an IDE
+│ ├── 📁 __init__.py # Python package initialization file
+│ ├── 📁 thostmduserapi_se.dll # Market data API dynamic library
+│ ├── 📁 thosttraderapi_se.dll # Trading API dynamic library
+│ └── 📁 ... # Other Files
+├── 📁 build.py # Compilation script
+├── 📁 ctp_demo.py # Test demo
+├── 📁 meson.build # Meson configuration file (ignore this if you don't understand Meson configuration)
+├── 📁 pyproject.toml # Python project management configuration file, automatically generated by UV, contains project information
+├── 📁 README.md # Project documentation
+├── 📁 uv.lock # UV lock file, automatically generated by UV, ignore this
+└── 📁 ... # Other files
 ```
 
-## 8. 后续工作
+## 8. Follow-up Work
 
-**提示 import \_\_builtin\_\_ 错误**
+**Prompt: import \_\_builtin\_\_ error**
 
-当你打开 `thostmduserapi.py` 或 `thosttraderapi.py` 时，可能会出现以下错误
+When you open `thostmduserapi.py` or `thosttraderapi.py` When encountering this error, the following error may occur:
 
 ![thostmduserapi_error](assets/thostmduserapi_error.png)
 
-只需改为以下代码即可解决：
+Simply change the code to:
 
 ![thostmduserapi_no_error](assets/thostmduserapi_no_error.png)
 
-手动编译教程：
+Manual Compilation Tutorial:
 
-[CTP Python API 利用Swig 封装Windows版（traderapi）](https://blog.csdn.net/mdd2012/article/details/145290497)
+[CTP Python API Windows Version Wrapped with SWIG (traderapi)](https://blog.csdn.net/mdd2012/article/details/145290497)
 
-[CTP Python API 利用Swig 封装Windows版（mduserapi）](https://blog.csdn.net/mdd2012/article/details/145291662)
+[CTP Python API Windows Version Wrapped with SWIG (mduserapi)](https://blog.csdn.net/mdd2012/article/details/145291662)
 
-## 9. 更多
+## 9. More
 
-Pybind11 和 SWIG 多个维度详细的比较
+Detailed Comparison of Pybind11 and SWIG from Multiple Dimensions
 
-|         特性         | Pybind11                                                     | SWIG                                                         |
-| :------------------: | :----------------------------------------------------------- | :----------------------------------------------------------- |
-|    **哲学与设计**    | **头文件库（Header-only）**，模仿 Boost.Python 但更轻量，采用现代 C++（11+）元编程技术。 | **接口编译器**，是一个独立的程序，通过一个独立的 `.i` 接口文件来定义绑定。 |
-| **易用性与代码风格** | **非常直观**。绑定代码直接写在 C++ 源文件中，使用类似于函数调用和类定义的语法，感觉像是语言的一部分。语法简洁，与C++紧密集成。 | **声明式**。需要学习一门新的“接口描述语言”，与C++代码分离，需要编写一个独立的 .i 接口文件。 |
-|     **学习曲线**     | **低**（如果你懂现代C++）。对于C++开发者来说非常自然。       | **中到高**。需要学习SWIG的特定语法和指令，概念上更独立。     |
-|     **编译速度**     | **快**。因为是头文件库，编译时直接包含，现代编译器优化得很好。 | **慢**。SWIG会先解析C++头文件和接口文件，生成一个**巨大且臃肿**的C++源文件，然后再编译它。 |
-|   **生成代码大小**   | **小且高效**。生成的代码非常精简，只包含你实际绑定的部分。   | **大**。生成的包装代码非常庞大，因为它试图处理所有可能的边界情况和多语言支持。 |
-|     **特性支持**     | **对现代C++支持极好**。无缝支持 `std::shared_ptr`, `std::unique_ptr`, `lambda`, `stl`容器等。由于其基于模板元编程的设计，它对现代 C++ 特性的支持是第一梯队的。 | **支持广泛但可能需要配置**。支持很多特性，但通常需要额外的“类型映射”来正确处理复杂的C++类型到Python类型的转换。 |
-|    **多语言支持**    | **仅限 Python** (官方核心)。社区有实验性的其他语言分支，但非主流。 | **核心优势**。**支持大量语言**（Python, Java, C#, Go, Perl, Ruby, Lua, R, PHP等）。一套接口可生成多语言绑定。 |
-|   **社区与流行度**   | **极高**（在C++/Python领域）。是当前该领域的**事实标准**，新项目首选。 | **稳定且悠久**。拥有悠久的历史和庞大的现有代码库，非常稳定。 |
-|       **性能**       | 生成的二进制模块在**调用性能**上几乎没有差异。Pybind11 的编译速度通常快于 SWIG（SWIG 生成代码 + 编译代码的总时间）。 | 生成的二进制模块在**调用性能**上几乎没有差异。SWIG 生成的模块因为代码庞大，其导入时间（import time）通常比 Pybind11 生成的模块要长。 |
+|            feature             | Pybind11                                                     | SWIG                                                         |
+| :----------------------------: | :----------------------------------------------------------- | :----------------------------------------------------------- |
+|   **Philosophy and Design**    | The **header-only** library mimics Boost.Python but is more lightweight and employs modern C++ (11+) metaprogramming techniques. | The **interface compiler** is a standalone program that defines bindings through a separate `.i` interface file. |
+| **Usability and coding style** | **Very intuitive.** The binding code is written directly in the C++ source file, using syntax similar to function calls and class definitions, making it feel like part of the language. The syntax is concise and tightly integrated with C++. | **Declarative**. This requires learning a new "interface description language," separate from C++ code, and requires writing a separate .i interface file. |
+|       **Learning curve**       | **Low** (if you understand modern C++). Very natural for C++ developers. | **Intermediate to Advanced**. Requires learning SWIG's specific syntax and commands, and is conceptually more independent. |
+|     **Compilation speed**      | **Fast.** Because it's a header file library, it's directly included at compile time, and modern compilers optimize it very well. | **Slow**. SWIG first parses the C++ header and interface files, generating a **huge and bloated** C++ source file, and then compiles it. |
+|    **Generated code size**     | **Small and efficient.** The generated code is very concise, containing only the parts you actually bind. | **Very large**. The generated wrapper code is extremely large because it attempts to handle all possible edge cases and multi-language support. |
+|      **Feature support**       | **Excellent support for modern C++.** Seamlessly supports `std::shared_ptr`, `std::unique_ptr`, `lambda`, `stl` containers, etc. Due to its template-based metaprogramming design, its support for modern C++ features is top-tier. | **Extensive support but may require configuration.** It supports many features, but often requires additional "type mapping" to properly handle complex C++ type to Python type conversions. |
+|    **Multilingual support**    | **Python only** (official core). There are experimental forks for other languages in the community, but they are not mainstream. | **Core Advantages**. **Supports a wide range of languages** (Python, Java, C#, Go, Perl, Ruby, Lua, R, PHP, etc.). A single interface can generate multi-language bindings. |
+|  **Community and popularity**  | **Extremely high** (in the C++/Python field). It is the **de facto standard** in this field and the first choice for new projects. | **Stable and long-standing.** It boasts a long history and a large existing codebase, making it extremely stable. |
+|        **performance**         | The generated binary modules show almost no difference in **invocation performance**. Pybind11 typically compiles faster than SWIG (the total time for SWIG to generate and compile code). | The generated binary modules show almost no difference in **invocation performance**. Modules generated by SWIG, due to their larger code size, typically have longer import times than those generated by Pybind11. |
 
-## 10. 免责声明
+## 10. Disclaimer
 
-**注意**：使用本项目前请阅读以下声明内容：
+**Note**: Please read the following disclaimer before using this project:
 
-**最后更新日期**：2025年11月20日
+**Last Updated Date**: November 20, 2025
 
-**生效日期**：首次发布即生效
+**Effective Date**: Effective immediately upon first release
 
-### 重要提示
+### Important Note
 
-在使用 ctp_swig_build（以下简称"本系统"）前，请仔细阅读并充分理解以下条款。通过使用本系统，即视为您已接受本免责声明的全部内容。
+Before using ctp_swig_build (hereinafter referred to as "this system"), please carefully read and fully understand the following terms. By using this system, you agree to all the contents of this disclaimer.
 
-### 声明条款
+### Terms and Conditions
 
-#### 第一条 产品性质
+#### Article 1 Product Nature
 
-1. 本系统为技术工具软件，不构成任何形式的投资建议
-2. 开发者不承诺本系统的完整性、准确性和时效性
+1. This system is a technical software tool and does not constitute any form of investment advice.
 
-#### 第二条 风险提示
+2. The developer does not guarantee the completeness, accuracy, or timeliness of this system.
 
-1. 实际交易结果受市场波动、网络延迟、政策变化等多种因素影响
-2. 使用者应自行承担交易决策的全部后果
+#### Article 2 Risk Warning
 
-#### 第三条 责任限制
+1. Actual transaction results are affected by various factors such as market fluctuations, network latency, and policy changes.
 
-开发者不对以下情况承担责任：
+2. Users shall bear all consequences of their trading decisions.
 
-- 因使用本系统导致的直接或间接损失
-- 第三方数据服务的中断或错误
-- 不可抗力导致的系统不可用
-- 用户操作失误引发的交易问题
+#### Article 3 Limitation of Liability
 
-#### 第四条 合规要求
+The developer shall not be liable for the following:
 
-1. 用户应确保使用行为符合所在地监管规定
-2. 禁止将本系统用于非法套利、市场操纵等违法行为
+- Direct or indirect losses caused by the use of this system
 
-#### 第五条 知识产权
+- Interruption or errors of third-party data services
 
-本项目使用 MIT License
+- System unavailability due to force majeure
 
-#### 第六条 声明更新
+- Transaction problems caused by user operational errors
 
-1. 开发者有权不定期更新本声明
-2. 继续使用视为接受更新后的条款
+#### Article 4 Compliance Requirements
 
-#### 争议解决
+1. Users shall ensure that their use complies with local regulatory requirements.
 
-本声明适用中华人民共和国法律。任何争议应首先通过友好协商解决，协商不成则提交仲裁委员会仲裁。
+2. It is prohibited to use this system for illegal arbitrage, market manipulation, or other illegal activities.
+
+#### Article 5 Intellectual Property
+
+This project uses the MIT License.
+
+#### Article 6 Updates to this Statement
+
+1. The developer has the right to update this statement from time to time.
+
+2. Continued use constitutes acceptance of the updated terms.
+
+#### Dispute Resolution
+
+This statement is governed by the laws of the People's Republic of China. Any dispute shall first be settled amicably through negotiation; if negotiation fails, it shall be submitted to an arbitration commission for arbitration.
 
 ------
 
-*请在使用本系统前确保已完整阅读并理解上述条款。如有疑问，请咨询专业法律人士。*
+*Please ensure you have fully read and understood the above terms before using this system. If you have any questions, please consult a legal professional.*
 
-*ctp_swig_build* *最后更新日期: 2025-11-20*
+## 11. Exchange and Learning
+
+&ensp;[![QQ Group](https://img.shields.io/badge/QQ%20Group%231-Join-blue)](https://qun.qq.com/universal-share/share?ac=1&authKey=dzGDk%2F%2Bpy%2FwpVyR%2BTrt9%2B5cxLZrEHL793cZlFWvOXuV5I8szMnOU4Wf3ylap7Ph0&busi_data=eyJncm91cENvZGUiOiI0NDYwNDI3NzciLCJ0b2tlbiI6IlFrM0ZhZmRLd0xIaFdsZE9FWjlPcHFwSWxBRFFLY2xZbFhaTUh4K2RldisvcXlBckZ4NVIrQzVTdDNKUFpCNi8iLCJ1aW4iOiI4MjEzMDAwNzkifQ%3D%3D&data=O1Bf7_yhnvrrLsJxc3g5-p-ga6TWx6EExnG0S1kDNJTyK4sV_Nd9m4p-bkG4rhj_5TdtS5lMjVZRBv4amHyvEA&svctype=4&tempid=h5_group_info)
+
+------
+
+*ctp_swig_build* *Last updated: 2025-11-20*
