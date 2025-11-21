@@ -9,6 +9,7 @@
   English |
   <a href="README_CN.md">简体中文</a>
 </p>
+
 **A brief introduction to this project:** This project enables one-click automatic compilation of CTP C++ interfaces into Python interfaces.
 
 Click here to directly experience the compiled Python API files =>: [Releases](https://github.com/Lumosylva/ctp_swig_build/releases)
