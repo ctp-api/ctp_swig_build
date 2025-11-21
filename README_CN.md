@@ -1,21 +1,29 @@
 <h1 align="center">ctp_swig_build</h1>
 
 <p align="center">
-_✨ 一键实现自动编译 CTP C++ 接口为 Python 接口 ✨_
+✨ 一键实现自动编译 CTP C++ 接口为 Python 接口 ✨
 </p>
+
 
 <p align="center">
   简体中文 |
   <a href="README.md">English</a>
 </p>
-
 **一句话介绍本项目**：一键实现自动编译 CTP C++ 接口为 Python 接口。
 
 戳这里可以直接体验编译好的 Python API 文件 => ：[Releases](https://github.com/Lumosylva/ctp_swig_build/releases)
 
-**Tips**: 如果你对使用 Pybind11 编译方式感兴趣，可参考另外一个项目：https://github.com/Homalos/ctp
+**Tips**：如果你对使用 Pybind11 编译方式感兴趣，可参考另外一个项目：https://github.com/Homalos/ctp
 
 本文档末尾有 Swig 编译方式与 Pybind11 编译方式的对比，国内著名量化开源框架 vn.py 底层就是使用的 Pybind11 编译方式。
+
+技术栈：Python + Swig + MSVC + meson-python + mypy
+
+环境： 
+
+Windows：Visual Studio 2022(安装时勾选 C++ 开发，主要提供 MSVC + Ninja 支持)
+
+Linux：GCC(注意此项目在 Linux 环境下未做测试，不能保证编译成功)
 
 ## 1. 前言
 
@@ -35,11 +43,11 @@ _✨ 一键实现自动编译 CTP C++ 接口为 Python 接口 ✨_
 
 - 下载本项目
 
-  使用 `git clone` 或者  `Download ZIP` (在gitcode上是点击**下载zip**)将本项目下载到本地，然后将上述所有 API 文件复制并替换掉 **ctp** 内文件。
+  使用 `git clone` 或者  `Download ZIP` (在 gitcode 上是点击**下载zip**)将本项目下载到本地，然后将上述下载的所有 API 文件(总共10个文件)复制替换项目 **ctp_source** 内原有的文件，如图：
 
-  ![ctp_files](assets/ctp_files.jpg)
+  ![ctp_files](assets/ctp_source.jpg)
 
-  完成之后项目结构如下：
+  复制完成之后项目结构如下：
 
   ![project](assets/project.jpg)
 
@@ -51,7 +59,7 @@ _✨ 一键实现自动编译 CTP C++ 接口为 Python 接口 ✨_
 
   推荐使用 `UV` 来安装，下面有UV的安装使用说明。也可以使用其他 Python 管理工具，但是需自行配置相关环境。注意要安装64位Python版本，将环境变量配置好。本文所用的是 **`3.13.6`** 版本，如果自用到别的版本，下列步骤一致。
 
-- **安装 Visual Studio**
+- **安装 Visual Studio**(Winodws环境安装，Linux环境安装GCC)
 
   主要是用到其中的 `MSVC` 和 `Ninja`，本文所用的是 **Visual Studio 2022**，注意安装 Visual Studio 的时候勾选上 **C++** 开发。
 
@@ -99,8 +107,6 @@ _✨ 一键实现自动编译 CTP C++ 接口为 Python 接口 ✨_
 
 ## 4. 使用
 
-项目使用 `SWIG + MSVC + Meson + Stubgen` 的组合来编译CTP C++ API生成Python扩展模块。
-
 ### 使用方法：
 
 1. 激活 Python 虚拟环境：
@@ -115,31 +121,29 @@ _✨ 一键实现自动编译 CTP C++ 接口为 Python 接口 ✨_
    python build.py
    ```
 
-3. 测试接口：
+3. 测试编译：
 
    demo文件为 `ctp_demo.py`，运行这个即可。
 
-## 5. 执行结果展示
+## 5. 执行结果
 
-运行 `python build.py` 结果
+运行 `python build.py` 结果：
 
-![build1](assets/build1.jpg)
+![build1](assets/build1.png)
 
-![build2](assets/build2.jpg)
+![build2](assets/build2.png)
 
-![build3](assets/build3.jpg)
+![build3](assets/build3.png)
 
-![build4](assets/build4.jpg)
+运行编译脚本后，Python API 编译产物将会生成在项目 **ctp_api** 目录下
 
-![build5](assets/build5.jpg)
-
-运行 `ctp_demo.py` 结果：
+运行 `ctp_demo.py` 可以看到编译测试结果：
 
 ![demo_result](assets/demo_result.jpg)
 
 ## 6. 编译脚本主要做了什么：
 
-build.py文件：
+`build.py`文件：
 
 - 检查所有必要的依赖项（SWIG、Meson、Ninja）
 - 自动设置和清理构建目录
@@ -151,7 +155,7 @@ build.py文件：
 - 使用mypy自带的stubgen生成类型存根文件
 - 提供了多种命令行选项（仅配置、跳过存根生成等）
 
-meson.build文件：
+`meson.build`文件：
 
 - 配置了C++17编译环境
 
@@ -179,26 +183,34 @@ meson.build文件：
 
 ```reStructuredText
 ctp_swig_build/
-├── 📁 assets/                      # 资源文件夹，包含一些图片展示
+├── 📁 assets/                      # 资源文件夹，包含一些图片
 ├── 📁 build/					    # 编译过程文件夹，不用关注
-├── 📁 ctp/                         # CTP API文件文件夹，存放CTP API相关文件
-│   ├── 📁 _thostmduserapi.cp313-win_amd64.pyd		# 重命名后的行情API模块，由编译脚本自动生成
-│   ├── 📁 _thostmduserapi.cp313-win_amd64.lib		# 重命名后的库文件，由编译脚本自动生成
-│   ├── 📁 _thosttraderapi.cp313-win_amd64.pyd		# 重命名后的交易API模块，由编译脚本自动生成
-│   ├── 📁 _thosttraderapi.cp313-win_amd64.lib		# 重命名后的库文件，由编译脚本自动生成
-│   ├── 📁 thostmduserapi.i		    # 接口文件，用于告诉swig为哪些行情类和方法创建接口。
-│   ├── 📁 thosttraderapi.i		    # 接口文件，用于告诉swig为哪些交易类和方法创建接口。
-│   ├── 📁 thostmduserapi.py		# SWIG生成的Python 行情接口
-│   ├── 📁 thosttraderapi.py		# SWIG生成的Python 交易接口
-│   ├── 📁 thostmduserapi.pyi		# 利用mypy自带的stubgen生成行情存根文件，作用是在IDE中使用时提供代码提示
-│   ├── 📁 thosttraderapi.pyi		# 利用mypy自带的stubgen生成交易存根文件，作用是在IDE中使用时提供代码提示
-│   ├── 📁 __init__.py				# Python包初始化文件
-│   ├── 📁 thostmduserapi_se.dll	# 行情API动态库
-│   ├── 📁 thosttraderapi_se.dll	# 交易API动态库
-│   └── 📁 ...                      # 其他文件
+├── 📁 ctp_api/						# CTP API 编译产物文件夹，存放编译出的Python API相关文件
+│   ├── 📁 __init__.py
+│   ├── 📁 _thostmduserapi.cp313-win_amd64.pyd	# 行情API模块，由编译脚本自动生成
+│   ├── 📁 _thosttraderapi.cp313-win_amd64.pyd	# 交易API模块，由编译脚本自动生成
+│   ├── 📁 thostmduserapi.py		# swig生成的Python行情接口
+│   ├── 📁 thosttraderapi.py		# swig生成的Python交易接口
+│   ├── 📁 thostmduserapi.pyi		# 存根文件
+│   ├── 📁 thosttraderapi.pyi		# 存根文件
+│   ├── 📁 thostmduserapi_se.dll	# 行情动态库
+│   └── 📁 thosttraderapi_se.dll	# 交易动态库
+├── 📁 ctp_source/                  # CTP API 源文件文件夹，存放原始C++ API相关文件
+│   ├── 📁 error.dtd
+│   ├── 📁 error.xml
+│   ├── 📁 ThostFtdcMdApi.h
+│   ├── 📁 ThostFtdcTraderApi.h
+│   ├── 📁 ThostFtdcUserApiDataType.h
+│   ├── 📁 ThostFtdcUserApiStruct.h
+│   ├── 📁 thostmduserapi_se.dll	# 行情动态库
+│   ├── 📁 thostmduserapi_se.lib	# 行情静态库
+│   ├── 📁 thosttraderapi_se.dll	# 交易动态库
+│   └── 📁 thosttraderapi_se.lib	# 交易静态库
 ├── 📁 build.py                     # 编译脚本
-├── 📁 ctp_demo.py                  # 测试demo
+├── 📁 ctp_demo.py                  # 测试demo，运行可以测试编译是否成功
 ├── 📁 meson.build                  # meson配置文件(不懂meson配置不用关注)
+├── 📁 thostmduserapi.i		    	# 接口文件，用于告诉swig为哪些行情类和方法创建接口。
+├── 📁 thosttraderapi.i		    	# 接口文件，用于告诉swig为哪些交易类和方法创建接口。
 ├── 📁 pyproject.toml               # Python项目管理配置文件，由UV自动生成，包含项目信息
 ├── 📁 README.md                    # 项目说明文档
 ├── 📁 uv.lock                      # UV锁定文件，由UV自动生成，不用关注
@@ -300,4 +312,4 @@ Pybind11 和 SWIG 多个维度详细的比较
 
 ------
 
-*ctp_swig_build* *最后更新日期: 2025-11-20*
+*ctp_swig_build* *最后更新日期: 2025-11-21*

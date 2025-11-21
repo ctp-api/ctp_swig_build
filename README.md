@@ -1,21 +1,29 @@
 <h1 align="center">ctp_swig_build</h1>
 
 <p align="center">
-_✨ Enables one-click automatic compilation of CTP C++ interfaces into Python interfaces ✨_
+✨ Enables one-click automatic compilation of CTP C++ interfaces into Python interfaces ✨
 </p>
+
 
 <p align="center">
   English |
   <a href="README_CN.md">简体中文</a>
 </p>
-
-**A brief introduction to this project:** Enables one-click automatic compilation of CTP C++ interfaces into Python interfaces.
+**A brief introduction to this project:** This project enables one-click automatic compilation of CTP C++ interfaces into Python interfaces.
 
 Click here to directly experience the compiled Python API files =>: [Releases](https://github.com/Lumosylva/ctp_swig_build/releases)
 
-**Tips:** If you are interested in using the Pybind11 compilation method, please refer to another project [ctp](https://github.com/Homalos/ctp).
+**Tips:** If you are interested in using the Pybind11 compilation method, please refer to another project: https://github.com/Homalos/ctp
 
 A comparison of the Swig and Pybind11 compilation methods is provided at the end of this document. The well-known domestic quantitative open-source framework vn.py uses the Pybind11 compilation method at its core.
+
+Technology Stack: Python + Swig + MSVC + meson-python + mypy
+
+Environment:
+
+Windows: Visual Studio 2022 (select C++ development during installation, mainly providing MSVC + Ninja support)
+
+Linux: GCC (Note: This project has not been tested in a Linux environment, and successful compilation cannot be guaranteed)
 
 ## 1. Introduction
 
@@ -35,25 +43,25 @@ The unzipped 64-bit API file package looks like this:
 
 - Download this project
 
-Use `git clone` or `Download ZIP` (on gitcode, click **Download zip**) to download this project to your local machine. Then copy all the API files mentioned above and replace the files in the **ctp** folder.
+  Use `git clone` or `Download ZIP` (on gitcode, click **Download ZIP**) to download this project to your local machine. Then, copy all the downloaded API files (10 files in total) and replace the existing files in the project's **ctp_source** folder, as shown in the image:
 
-![ctp_files](assets/ctp_files.jpg)
+![ctp_files](assets/ctp_source.jpg)
 
-The completed project structure is as follows:
+After copying, the project structure will look like this:
 
 ![project](assets/project.jpg)
 
 - **Installing Swig**
 
-The Swig used in this article is version **`swigwin-4.3.0`**, [click here to download](https://zenlayer.dl.sourceforge.net/project/swig/swigwin/swigwin-4.3.0/swigwin-4.3.0.zip?viasf=1). More Swig versions can be downloaded from [swigwin](https://sourceforge.net/projects/swig/files/swigwin/).
+The Swig version used in this article is **swigwin-4.3.0**, which can be downloaded here: [Click here to download](https://zenlayer.dl.sourceforge.net/project/swig/swigwin/swigwin-4.3.0/swigwin-4.3.0.zip?viasf=1). More Swig versions can be downloaded here: [Download address](https://sourceforge.net/projects/swig/files/swigwin/).
 
 - **Installing Python**
 
 It is recommended to use `UV` for installation. Instructions for installing and using UV are provided below. Other Python management tools can also be used, but you will need to configure the relevant environment yourself. Note that you must install a 64-bit Python version and configure the environment variables correctly. This article uses version **3.13.6**. If you are using a different version, the following steps are the same.
 
-- **Install Visual Studio**
+- **Installing Visual Studio** (Windows environment installation, Linux environment GCC installation)
 
-This mainly uses `MSVC` and `Ninja`. This article uses **Visual Studio 2022**. Note that you should select **C++** development when installing Visual Studio.
+This mainly uses `MSVC` and `Ninja`. This article uses **Visual Studio 2022**. Note that when installing Visual Studio, you should select **C++** development.
 
 ## 3. Installing UV and Python Environment
 
@@ -98,8 +106,6 @@ uv sync
 
 ## 4. Usage
 
-The project uses a combination of `SWIG + MSVC + Meson + Stubgen` to compile the CTP C++ API and generate Python extension modules.
-
 ### Usage:
 
 1. Activate the Python virtual environment:
@@ -114,25 +120,23 @@ The project uses a combination of `SWIG + MSVC + Meson + Stubgen` to compile the
 python build.py
 ```
 
-3. Test the interface:
+3. Test compilation:
 
 The demo file is `ctp_demo.py`; simply run this.
 
-## 5. Execution Results Display
+## 5. Execution Result
 
 Running `python build.py`:
 
-![build1](assets/build1.jpg)
+![build1](assets/build1.png)
 
-![build2](assets/build2.jpg)
+![build2](assets/build2.png)
 
-![build3](assets/build3.jpg)
+![build3](assets/build3.png)
 
-![build4](assets/build4.jpg)
+After running the compilation script, the Python API compilation artifacts will be generated in the project's **ctp_api** directory.
 
-![build5](assets/build5.jpg)
-
-Running `ctp_demo.py`:
+Running `ctp_demo.py` will display the compilation test results:
 
 ![demo_result](assets/demo_result.jpg)
 
@@ -190,30 +194,38 @@ This ensures that the Python module generated by SWIG can correctly find and imp
 
 ```reStructuredText
 ctp_swig_build/
-├── 📁 assets/ 	# Resource folder, containing some image displays
-├── 📁 build/ 	# Compilation process folder, no need to pay attention
-├── 📁 ctp/ 	# CTP API file folder, storing CTP API related files
-│ ├── 📁 _thostmduserapi.cp313-win_amd64.pyd # Renamed market data API module, automatically generated by the compilation script
-│ ├── 📁 _thostmduserapi.cp313-win_amd64.lib # Renamed library file, automatically generated by the compilation script
-│ ├── 📁 _thosttraderapi.cp313-win_amd64.pyd # Renamed trading API module, automatically generated by the compilation script
-│ ├── 📁 _thosttraderapi.cp313-win_amd64.lib # Renamed library file, automatically generated by the compilation script
-│ ├── 📁 thostmduserapi.i # Interface file, used to tell SWIG which market data classes and methods to create interfaces for.
-│ ├── 📁 thosttraderapi.i # Interface file, used to tell SWIG which trading classes and methods to create interfaces for.
-│ ├── 📁 thostmduserapi.py # Python market data interface generated by SWIG
-│ ├── 📁 thosttraderapi.py # Python trading interface generated by SWIG
-│ ├── 📁 thostmduserapi.pyi # Generates market data stub files using mypy's built-in stubgen, providing code suggestions when used in an IDE
-│ ├── 📁 thosttraderapi.pyi # Generates trading stub files using mypy's built-in stubgen, providing code suggestions when used in an IDE
-│ ├── 📁 __init__.py # Python package initialization file
-│ ├── 📁 thostmduserapi_se.dll # Market data API dynamic library
-│ ├── 📁 thosttraderapi_se.dll # Trading API dynamic library
-│ └── 📁 ... # Other Files
-├── 📁 build.py # Compilation script
-├── 📁 ctp_demo.py # Test demo
-├── 📁 meson.build # Meson configuration file (ignore this if you don't understand Meson configuration)
-├── 📁 pyproject.toml # Python project management configuration file, automatically generated by UV, contains project information
-├── 📁 README.md # Project documentation
-├── 📁 uv.lock # UV lock file, automatically generated by UV, ignore this
-└── 📁 ... # Other files
+├── 📁 assets/                      # The resource folder contains some images.
+├── 📁 build/					    # The compilation process folder is not required.
+├── 📁 ctp_api/						# The CTP API compilation artifacts folder contains the compiled Python API-related files.
+│   ├── 📁 __init__.py
+│   ├── 📁 _thostmduserapi.cp313-win_amd64.pyd	# The market data API module is automatically generated by the compilation script.
+│   ├── 📁 _thosttraderapi.cp313-win_amd64.pyd	# The trading API module is automatically generated by the compilation script.
+│   ├── 📁 thostmduserapi.py		# Python market data interface generated by SWIG
+│   ├── 📁 thosttraderapi.py		# Python trading interface generated by SWIG
+│   ├── 📁 thostmduserapi.pyi		# stub file
+│   ├── 📁 thosttraderapi.pyi		# stub file
+│   ├── 📁 thostmduserapi_se.dll	# Market Data Library
+│   └── 📁 thosttraderapi_se.dll	# Transaction Dynamics Library
+├── 📁 ctp_source/                  # The CTP API source file folder contains the original C++ API-related files.
+│   ├── 📁 error.dtd
+│   ├── 📁 error.xml
+│   ├── 📁 ThostFtdcMdApi.h
+│   ├── 📁 ThostFtdcTraderApi.h
+│   ├── 📁 ThostFtdcUserApiDataType.h
+│   ├── 📁 ThostFtdcUserApiStruct.h
+│   ├── 📁 thostmduserapi_se.dll	# Market Data Library
+│   ├── 📁 thostmduserapi_se.lib	# Static market data library
+│   ├── 📁 thosttraderapi_se.dll	# Transaction Dynamics Library
+│   └── 📁 thosttraderapi_se.lib	# Transaction static library
+├── 📁 build.py                     # Compilation script
+├── 📁 ctp_demo.py                  # The test demo can be run to test whether the compilation was successful.
+├── 📁 meson.build                  # Meson configuration file (Don't worry about this if you don't understand Meson configuration).
+├── 📁 thostmduserapi.i		    	# The interface file is used to tell SWIG which market data classes and methods to create interfaces for.
+├── 📁 thosttraderapi.i		    	# The interface file is used to tell SWIG which transaction classes and methods to create interfaces for.
+├── 📁 pyproject.toml               # Python project management configuration file, automatically generated by UV, containing project information.
+├── 📁 README.md                    # Project Description Document
+├── 📁 uv.lock                      # The UV lock file is automatically generated by UV and does not require your attention.
+└── 📁 ...                          # Other files
 ```
 
 ## 8. Follow-up Work
@@ -318,4 +330,4 @@ This statement is governed by the laws of the People's Republic of China. Any di
 
 ------
 
-*ctp_swig_build* *Last updated: 2025-11-20*
+*ctp_swig_build* *Last updated: 2025-11-21*

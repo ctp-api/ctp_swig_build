@@ -4,12 +4,38 @@ CTP SWIG构建脚本
 使用SWIG + MSVC + Meson构建CTP Python扩展模块，并生成类型存根文件
 """
 
-import os
-import sys
-import subprocess
-import shutil
-from pathlib import Path
 import argparse
+import platform
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+# CTP C++ API目录
+ctp_source_dir = "ctp_source"
+
+def get_platform_config():
+    """获取平台特定配置"""
+    system = platform.system().lower()
+    
+    if system == 'windows':
+        return {
+            'lib_suffix': '.lib',
+            'dll_suffix': '.dll',
+            'so_suffix': '.pyd',
+            'is_windows': True,
+            'is_linux': False
+        }
+    elif system == 'linux':
+        return {
+            'lib_suffix': '.a',
+            'dll_suffix': '.so',
+            'so_suffix': '.so',
+            'is_windows': False,
+            'is_linux': True
+        }
+    else:
+        raise RuntimeError(f"不支持的操作系统: {system}")
 
 def run_command(cmd, cwd=None, check=True):
     """运行命令并打印输出"""
@@ -74,12 +100,15 @@ def configure_meson(build_dir):
     """配置Meson构建"""
     print("配置Meson构建...")
     
-    # 查找MSVC编译器
+    platform_config = get_platform_config()
     cmd = ['meson', 'setup', build_dir, '--backend=ninja']
     
-    # 在Windows上，Meson会自动检测MSVC
-    if os.name == 'nt':
+    # 平台特定配置
+    if platform_config['is_windows']:
         cmd.extend(['--vsenv'])  # 使用Visual Studio环境
+    elif platform_config['is_linux']:
+        # Linux特定配置可以在这里添加
+        pass
     
     run_command(cmd)
     print("✓ Meson配置完成")
@@ -117,15 +146,18 @@ def install_project(build_dir):
     # 重命名pyd文件，在文件名前加下划线，这样做的目的是让SWIG生成的Python模块能够正确导入带下划线的底层C扩展模块。
     rename_pyd_files()
     
+    # 复制运行时依赖的DLL文件
+    copy_runtime_dlls()
+    
     print("✓ 项目安装完成")
 
 def copy_swig_python_files(build_dir):
-    """复制SWIG生成的Python文件到项目ctp目录"""
-    print("复制SWIG生成的Python文件到项目ctp目录...")
+    """复制SWIG生成的Python文件到ctp_api目录"""
+    print("复制SWIG生成的Python文件到ctp_api目录...")
     
-    # 使用项目根目录的ctp文件夹作为目标
+    # 使用ctp_api目录作为目标
     project_root = Path.cwd()
-    ctp_dir = project_root / 'ctp'
+    ctp_dir = project_root / 'ctp_api'
     
     build_path = Path(build_dir)
     modules = ['thostmduserapi', 'thosttraderapi']
@@ -141,11 +173,14 @@ def copy_swig_python_files(build_dir):
             print(f"⚠ 未找到 {py_file}")
 
 def rename_pyd_files():
-    """重命名pyd文件，在文件名前加下划线，并删除旧文件"""
-    print("重命名pyd文件，在文件名前添加下划线...")
+    """重命名扩展模块文件，在文件名前加下划线，并删除旧文件"""
+    platform_config = get_platform_config()
+    so_suffix = platform_config['so_suffix']
+    
+    print("重命名扩展模块文件，在文件名前添加下划线...")
     
     project_root = Path.cwd()
-    ctp_dir = project_root / 'ctp'
+    ctp_dir = project_root / 'ctp_api'
     
     if not ctp_dir.exists():
         print(f"⚠ CTP目录不存在: {ctp_dir}")
@@ -154,12 +189,12 @@ def rename_pyd_files():
     modules = ['thostmduserapi', 'thosttraderapi']
     
     for module in modules:
-        # 查找包含版本号的pyd文件
-        pyd_files = list(ctp_dir.glob(f"{module}.cp*.pyd"))
+        # 查找包含版本号的扩展模块文件
+        so_files = list(ctp_dir.glob(f"{module}.cp*{so_suffix}"))
         
-        for pyd_file in pyd_files:
+        for so_file in so_files:
             # 构造新的文件名（在原文件名前加下划线）
-            old_name = pyd_file.name
+            old_name = so_file.name
             new_name = '_' + old_name
             new_path = ctp_dir / new_name
             
@@ -170,58 +205,80 @@ def rename_pyd_files():
                     print(f"✓ 删除已存在的文件: {new_name}")
                 
                 # 重命名文件
-                pyd_file.rename(new_path)
+                so_file.rename(new_path)
                 print(f"✓ 重命名 {old_name} -> {new_name}")
             except Exception as e:
                 print(f"⚠ 重命名 {old_name} 失败: {e}")
         
-        # 同时重命名对应的.lib文件（如果存在）
-        lib_files = list(ctp_dir.glob(f"{module}.cp*.lib"))
+        # 删除不需要的库文件（如果存在）
+        platform_config = get_platform_config()
+        lib_suffix = platform_config['lib_suffix']
+        lib_files = list(ctp_dir.glob(f"{module}.cp*{lib_suffix}"))
         for lib_file in lib_files:
-            old_name = lib_file.name
-            new_name = '_' + old_name
-            new_path = ctp_dir / new_name
-            
             try:
-                # 如果目标文件已存在，先删除
-                if new_path.exists():
-                    new_path.unlink()
-                    print(f"✓ 删除已存在的文件: {new_name}")
-                
-                lib_file.rename(new_path)
-                print(f"✓ 重命名 {old_name} -> {new_name}")
+                lib_file.unlink()
+                print(f"✓ 删除不需要的文件: {lib_file.name}")
             except Exception as e:
-                print(f"⚠ 重命名 {old_name} 失败: {e}")
+                print(f"⚠ 删除 {lib_file.name} 失败: {e}")
     
     # 清理可能存在的旧pyd和lib文件
     cleanup_old_files(ctp_dir, modules)
 
+def copy_runtime_dlls():
+    """复制运行时依赖的动态库文件到ctp_api目录"""
+    platform_config = get_platform_config()
+    dll_suffix = platform_config['dll_suffix']
+    
+    print(f"复制运行时依赖的动态库文件到ctp_api目录...")
+    
+    project_root = Path.cwd()
+    ctp_api_dir = project_root / 'ctp_api'
+    ctp_source_dir = project_root / 'ctp_source'
+    
+    dll_files = [
+        f'thostmduserapi_se{dll_suffix}',
+        f'thosttraderapi_se{dll_suffix}'
+    ]
+    
+    for dll_file in dll_files:
+        src = ctp_source_dir / dll_file
+        if src.exists():
+            dst = ctp_api_dir / dll_file
+            shutil.copy2(src, dst)
+            print(f"✓ 复制 {src} -> {dst}")
+        else:
+            print(f"⚠ 未找到 {src}")
+
 def cleanup_old_files(ctp_dir, modules):
-    """清理旧的pyd和lib文件"""
-    print("清理旧的pyd和lib文件...")
+    """清理旧的扩展模块和库文件"""
+    platform_config = get_platform_config()
+    so_suffix = platform_config['so_suffix']
+    lib_suffix = platform_config['lib_suffix']
+    
+    print("清理旧的扩展模块和库文件...")
     
     for module in modules:
-        # 删除不带下划线的旧pyd文件
-        old_pyd_files = list(ctp_dir.glob(f"{module}.cp*.pyd"))
-        for old_file in old_pyd_files:
+        # 删除不带下划线的旧扩展模块文件
+        old_so_files = list(ctp_dir.glob(f"{module}.cp*{so_suffix}"))
+        for old_file in old_so_files:
             try:
                 old_file.unlink()
                 print(f"✓ 删除旧文件: {old_file.name}")
             except Exception as e:
                 print(f"⚠ 删除 {old_file.name} 失败: {e}")
         
-        # 删除不带下划线的旧lib文件
-        old_lib_files = list(ctp_dir.glob(f"{module}.cp*.lib"))
-        for old_file in old_lib_files:
+        # 删除所有库文件（包括带下划线的）
+        all_lib_files = list(ctp_dir.glob(f"*{module}*{lib_suffix}"))
+        for old_file in all_lib_files:
             try:
                 old_file.unlink()
-                print(f"✓ 删除旧文件: {old_file.name}")
+                print(f"✓ 删除不需要的文件: {old_file.name}")
             except Exception as e:
                 print(f"⚠ 删除 {old_file.name} 失败: {e}")
 
 def generate_stubs():
     """生成类型存根文件"""
-    print("在项目ctp目录中生成类型存根文件...")
+    print("在ctp_api目录中生成类型存根文件...")
     
     # 首先检查stubgen是否可用
     try:
@@ -246,9 +303,9 @@ def generate_stubs():
             return False
     
     try:
-        # 使用项目根目录的ctp文件夹
+        # 使用ctp_api目录
         project_root = Path.cwd()
-        ctp_dir = project_root / 'ctp'
+        ctp_dir = project_root / 'ctp_api'
         
         if not ctp_dir.exists():
             print(f"⚠ CTP目录不存在: {ctp_dir}")
@@ -272,10 +329,10 @@ def generate_stubs():
                     if str(project_root) not in sys.path:
                         sys.path.insert(0, str(project_root))
                     
-                    # 使用 stubgen -m ctp._thostmduserapi -o . 的格式
+                    # 使用 stubgen -m ctp_api._thostmduserapi -o . 的格式
                     stub_cmd = [
                         'stubgen',
-                        '-m', f'ctp._{module}',  # 使用带下划线的模块名
+                        '-m', f'ctp_api._{module}',  # 使用带下划线的模块名
                         '-o', '.'
                     ]
                     
@@ -316,7 +373,7 @@ def generate_stubs():
             print("⚠ 没有成功生成任何存根文件")
             print("手动生成命令（在项目根目录执行）:")
             for module in modules:
-                print(f"  stubgen -m ctp._{module} -o .")
+                print(f"  stubgen -m ctp_api._{module} -o .")
             return False
     
     except Exception as e:
@@ -325,15 +382,18 @@ def generate_stubs():
 
 
 def copy_dlls_to_build(build_dir):
-    """复制DLL文件到构建目录"""
-    print("复制DLL文件...")
+    """复制动态库文件到构建目录"""
+    platform_config = get_platform_config()
+    dll_suffix = platform_config['dll_suffix']
+    
+    print("复制动态库文件...")
     
     dll_files = [
-        'ctp/thostmduserapi_se.dll',
-        'ctp/thosttraderapi_se.dll'
+        f'ctp_source/thostmduserapi_se{dll_suffix}',
+        f'ctp_source/thosttraderapi_se{dll_suffix}'
     ]
     
-    build_ctp_dir = Path(build_dir) / 'ctp'
+    build_ctp_dir = Path(build_dir) / 'ctp_source'
     build_ctp_dir.mkdir(exist_ok=True)
     
     for dll_file in dll_files:
@@ -390,23 +450,23 @@ def main():
             stub_success = generate_stubs()
         
         print("\n=== 构建完成 ===")
-        print("模块已生成在项目根目录的ctp文件夹中")
+        print("模块已生成在ctp_api目录中")
         print("可以使用以下方式导入CTP模块:")
-        print("  import ctp.thostmduserapi")
-        print("  import ctp.thosttraderapi")
+        print("  import ctp_api.thostmduserapi")
+        print("  import ctp_api.thosttraderapi")
         print("\n生成的文件:")
-        print("  ctp/_thostmduserapi.cp*.pyd - 行情API模块")
-        print("  ctp/_thosttraderapi.cp*.pyd - 交易API模块") 
-        print("  ctp/thostmduserapi.py - SWIG生成的Python接口")
-        print("  ctp/thosttraderapi.py - SWIG生成的Python接口")
+        print("  ctp_api/_thostmduserapi.cp*.pyd - 行情API模块")
+        print("  ctp_api/_thosttraderapi.cp*.pyd - 交易API模块")
+        print("  ctp_api/thostmduserapi.py - SWIG生成的Python接口")
+        print("  ctp_api/thosttraderapi.py - SWIG生成的Python接口")
         
         if not args.no_stubs:
             if stub_success:
-                print("  ctp/thostmduserapi.pyi - 类型存根文件 ✓")
-                print("  ctp/thosttraderapi.pyi - 类型存根文件 ✓")
+                print("  ctp_api/thostmduserapi.pyi - 类型存根文件 ✓")
+                print("  ctp_api/thosttraderapi.pyi - 类型存根文件 ✓")
             else:
-                print("  ctp/thostmduserapi.pyi - 类型存根文件 ❌")
-                print("  ctp/thosttraderapi.pyi - 类型存根文件 ❌")
+                print("  ctp_api/thostmduserapi.pyi - 类型存根文件 ❌")
+                print("  ctp_api/thosttraderapi.pyi - 类型存根文件 ❌")
         else:
             print("  类型存根文件生成已跳过")
         
