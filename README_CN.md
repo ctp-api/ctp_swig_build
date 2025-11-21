@@ -183,9 +183,9 @@ Linux：GCC(注意此项目在 Linux 环境下未做测试，不能保证编译�
 
 ```reStructuredText
 ctp_swig_build/
-├── 📁 assets/                      # 资源文件夹，包含一些图片
-├── 📁 build/					    # 编译过程文件夹，不用关注
-├── 📁 ctp_api/						# CTP API 编译产物文件夹，存放编译出的Python API相关文件
+├── 📁 assets/			# 资源文件夹，包含一些图片
+├── 📁 build/			# 编译过程文件夹，不用关注
+├── 📁 ctp_api/			# CTP API 编译产物文件夹，存放编译出的Python API相关文件
 │   ├── 📁 __init__.py
 │   ├── 📁 _thostmduserapi.cp313-win_amd64.pyd	# 行情API模块，由编译脚本自动生成
 │   ├── 📁 _thosttraderapi.cp313-win_amd64.pyd	# 交易API模块，由编译脚本自动生成
@@ -195,26 +195,26 @@ ctp_swig_build/
 │   ├── 📁 thosttraderapi.pyi		# 存根文件
 │   ├── 📁 thostmduserapi_se.dll	# 行情动态库
 │   └── 📁 thosttraderapi_se.dll	# 交易动态库
-├── 📁 ctp_source/                  # CTP API 源文件文件夹，存放原始C++ API相关文件
-│   ├── 📁 error.dtd
-│   ├── 📁 error.xml
-│   ├── 📁 ThostFtdcMdApi.h
-│   ├── 📁 ThostFtdcTraderApi.h
-│   ├── 📁 ThostFtdcUserApiDataType.h
-│   ├── 📁 ThostFtdcUserApiStruct.h
-│   ├── 📁 thostmduserapi_se.dll	# 行情动态库
-│   ├── 📁 thostmduserapi_se.lib	# 行情静态库
-│   ├── 📁 thosttraderapi_se.dll	# 交易动态库
-│   └── 📁 thosttraderapi_se.lib	# 交易静态库
-├── 📁 build.py                     # 编译脚本
-├── 📁 ctp_demo.py                  # 测试demo，运行可以测试编译是否成功
-├── 📁 meson.build                  # meson配置文件(不懂meson配置不用关注)
-├── 📁 thostmduserapi.i		    	# 接口文件，用于告诉swig为哪些行情类和方法创建接口。
-├── 📁 thosttraderapi.i		    	# 接口文件，用于告诉swig为哪些交易类和方法创建接口。
-├── 📁 pyproject.toml               # Python项目管理配置文件，由UV自动生成，包含项目信息
-├── 📁 README.md                    # 项目说明文档
-├── 📁 uv.lock                      # UV锁定文件，由UV自动生成，不用关注
-└── 📁 ...                          # 其他文件
+├── 📁 ctp_source/                  # 存放CTP原生接口文件
+│   ├── 📁 error.dtd					# 包含所有可能的错误信息
+│   ├── 📁 error.xml					# 包含所有可能的错误信息
+│   ├── 📁 ThostFtdcMdApi.h				# C++头文件，包含获取行情相关的指令
+│   ├── 📁 ThostFtdcTraderApi.h			# C++头文件，包含交易相关的指令，如报单
+│   ├── 📁 ThostFtdcUserApiDataType.h	# 包含了所有用到的数据类型
+│   ├── 📁 ThostFtdcUserApiStruct.h		# 包含了所有用到的数据结构
+│   ├── 📁 thostmduserapi_se.dll		# 行情部分的动态链接库
+│   ├── 📁 thostmduserapi_se.lib		# 行情部分的静态链接库
+│   ├── 📁 thosttraderapi_se.dll		# 交易部分的动态链接库
+│   └── 📁 thosttraderapi_se.lib		# 交易部分的静态链接库
+├── 📁 build.py				# 编译脚本
+├── 📁 ctp_demo.py			# 测试demo，运行可以测试编译是否成功
+├── 📁 meson.build			# meson配置文件(不懂meson配置不用关注)
+├── 📁 thostmduserapi.i		# 接口文件，用于告诉swig为哪些行情类和方法创建接口。
+├── 📁 thosttraderapi.i		# 接口文件，用于告诉swig为哪些交易类和方法创建接口。
+├── 📁 pyproject.toml		# Python项目管理配置文件，由UV自动生成，包含项目信息
+├── 📁 README.md			# 项目说明文档
+├── 📁 uv.lock				# UV锁定文件，由UV自动生成，不用关注
+└── 📁 ...					# 其他文件
 ```
 
 ## 8. 后续工作
