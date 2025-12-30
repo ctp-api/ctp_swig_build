@@ -55,6 +55,8 @@ After copying, the project structure will look like this:
 
 The Swig version used in this article is **swigwin-4.3.0**, which can be downloaded here: [Click here to download](https://zenlayer.dl.sourceforge.net/project/swig/swigwin/swigwin-4.3.0/swigwin-4.3.0.zip?viasf=1). More Swig versions can be downloaded here: [Download address](https://sourceforge.net/projects/swig/files/swigwin/).
 
+(If you don't want to install SWIG from a binary file, you can also install it using `uv add swig` or `pip install swig`.)
+
 - **Installing Python**
 
 It is recommended to use `UV` for installation. Instructions for installing and using UV are provided below. Other Python management tools can also be used, but you will need to configure the relevant environment yourself. Note that you must install a 64-bit Python version and configure the environment variables correctly. This article uses version **3.13.6**. If you are using a different version, the following steps are the same.

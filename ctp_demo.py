@@ -7,12 +7,11 @@
 # @Email      : donnymoving@gmail.com
 # @Software   : PyCharm
 # 描述：CTP行情API示例
-import time
 import traceback
 from pathlib import Path
 from typing import Any
 
-import ctp.thostmduserapi as mdapi
+import ctp_api.thostmduserapi as mdapi
 
 
 class CFtdcMdSpi(mdapi.CThostFtdcMdSpi):
@@ -148,8 +147,8 @@ class MarketData(object):
 if __name__ == '__main__':
     # CTP配置（使用SimNow测试环境）
     ctp_setting = {
-        "investor_id": "",      # 输入你的simnow用户名
-        "password": "",         # 输入你的simnow密码
+        "investor_id": "160219",      # 输入你的simnow用户名
+        "password": "Donny$1991",         # 输入你的simnow密码
         "broker_id": "9999",    # 经纪商代码
         "md_address": "tcp://182.254.243.31:30011",     # 行情服务器地址
         # "md_address": "tcp://182.254.243.31:40011",   # 7x24 行情服务器地址
