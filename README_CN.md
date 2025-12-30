@@ -55,6 +55,8 @@ Linux：GCC(注意此项目在 Linux 环境下未做测试，不能保证编译�
 
   本文中所用的Swig是 **`swigwin-4.3.0`** 版本，[点击此处下载](https://zenlayer.dl.sourceforge.net/project/swig/swigwin/swigwin-4.3.0/swigwin-4.3.0.zip?viasf=1)，更多Swig版本 [下载地址](https://sourceforge.net/projects/swig/files/swigwin/)。
 
+  (如果你不想二进制文件安装swig也可以使用 uv add swig 或 pip install swig安装)
+
 - **安装 Python**
 
   推荐使用 `UV` 来安装，下面有UV的安装使用说明。也可以使用其他 Python 管理工具，但是需自行配置相关环境。注意要安装64位Python版本，将环境变量配置好。本文所用的是 **`3.13.6`** 版本，如果自用到别的版本，下列步骤一致。
