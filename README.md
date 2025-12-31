@@ -12,6 +12,7 @@
 **A brief introduction to this project:** This project enables one-click automatic compilation of CTP C++ interfaces into Python interfaces.
 
 Click here to directly experience the compiled Python API file (CTP v6.7.10):
+
 - [Github Releases](https://github.com/Lumosylva/ctp_swig_build/releases)
 - [GitCode Releases](https://gitcode.com/Lumosylva/ctp_swig_build/releases/CTP_v6.7.10)
 
