@@ -17,7 +17,11 @@
 - [Github Releases](https://github.com/Lumosylva/ctp_swig_build/releases)
 - [GitCode Releases](https://gitcode.com/Lumosylva/ctp_swig_build/releases/CTP_v6.7.10)
 
-**Tips**：如果你对使用 Pybind11 编译方式感兴趣，可参考另外一个项目：https://github.com/Homalos/ctp
+**Tips**：如果你对使用 Pybind11 编译方式感兴趣，可参考另外一个项目：
+
+https://github.com/Homalos/ctp
+
+https://gitcode.com/Homalos/ctp
 
 本文档末尾有 Swig 编译方式与 Pybind11 编译方式的对比，国内著名量化开源框架 vn.py 底层就是使用的 Pybind11 编译方式。
 

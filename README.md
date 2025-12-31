@@ -17,7 +17,11 @@ Click here to directly experience the compiled Python API file (CTP v6.7.10):
 - [Github Releases](https://github.com/Lumosylva/ctp_swig_build/releases)
 - [GitCode Releases](https://gitcode.com/Lumosylva/ctp_swig_build/releases/CTP_v6.7.10)
 
-**Tips:** If you are interested in using the Pybind11 compilation method, please refer to another project: https://github.com/Homalos/ctp
+**Tips:** If you are interested in using the Pybind11 compilation method, please refer to another project: 
+
+https://github.com/Homalos/ctp
+
+https://gitcode.com/Homalos/ctp
 
 A comparison of the Swig and Pybind11 compilation methods is provided at the end of this document. The well-known domestic quantitative open-source framework vn.py uses the Pybind11 compilation method at its core.
 
