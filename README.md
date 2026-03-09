@@ -59,10 +59,6 @@ After copying, the project structure will look like this:
 
 ![project](assets/project.jpg)
 
-- **Installing Swig**
-
-The Swig version used in this article is **swigwin-4.3.0**, which can be downloaded here: [Click here to download](https://zenlayer.dl.sourceforge.net/project/swig/swigwin/swigwin-4.3.0/swigwin-4.3.0.zip?viasf=1). More Swig versions can be downloaded here: [Download address](https://sourceforge.net/projects/swig/files/swigwin/).
-
 (If you don't want to install SWIG from a binary file, you can also install it using `uv add swig` or `pip install swig`.)
 
 - **Installing Python**
@@ -107,10 +103,9 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uv python install 3.13
 ```
 
-3. Install a Python virtual environment in the project root directory (isolated from the globally installed Python environment in the previous step), and install project dependencies to ensure environment consistency. The dependencies installed by `uv sync` are based on the library names defined in the `dependencies` section of the `pyproject.toml` file.
+3. Install a Python virtual environment and its dependencies in the project root directory to ensure environment consistency. The Python version installed by `uv sync` is determined by the configuration in the **`.python-version`** and **`pyproject.toml` **files. uv will automatically isolate and install the Python you installed in the previous steps in the project root directory, named **.venv**
 
 ```bash
-uv venv --python 3.13 .venv
 uv sync
 ```
 
