@@ -7,4 +7,5 @@ requires-python = ">=3.13"
 dependencies = [
     "meson-python>=0.18.0",
     "mypy>=1.18.1",
+    "swig>=4.4.1",
 ]
