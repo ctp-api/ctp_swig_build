@@ -103,7 +103,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uv python install 3.13
 ```
 
-3. Install a Python virtual environment and its dependencies in the project root directory to ensure environment consistency. The Python version installed by `uv sync` is determined by the configuration in the **`.python-version`** and **`pyproject.toml` ** files. uv will automatically isolate and install the Python you installed in the previous steps in the project root directory, named **.venv**
+3. Install a Python virtual environment and its dependencies in the project root directory to ensure environment consistency. The Python version installed by `uv sync` is determined by the configuration in the `.python-version` and `pyproject.toml` files. uv will automatically isolate and install the Python you installed in the previous steps in the project root directory, named `.venv`
 
 ```bash
 uv sync
