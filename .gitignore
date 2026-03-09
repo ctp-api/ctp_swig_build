@@ -8,5 +8,7 @@ wheels/
 .pytest_cache/
 # Virtual environments
 .venv/
+.venv
 .idea/
 .git/
+uv.lock
